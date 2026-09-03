@@ -1,0 +1,33 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      APP_ENV: development
+      AUTH_MODE: disabled
+      DATABASE_PATH: /data/ai_act_validator.db
+    volumes:
+      - validator-data:/data
+
+  web:
+    build: .
+    command:
+      - streamlit
+      - run
+      - src/ai_act_validator/ui.py
+      - --server.address=0.0.0.0
+      - --server.port=8501
+      - --server.headless=true
+      - --browser.gatherUsageStats=false
+    ports:
+      - "8501:8501"
+    environment:
+      API_BASE_URL: http://api:8000
+      PUBLIC_API_BASE_URL: http://localhost:8000
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  validator-data:
