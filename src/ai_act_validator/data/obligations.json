@@ -1,0 +1,122 @@
+{
+  "ruleset": "EU_AI_ACT_2026_07_27_V0_1",
+  "obligations": [
+    {
+      "code": "OBL_AI_LITERACY",
+      "title": "Adoptar medidas para asegurar un nivel suficiente de alfabetizacion en IA",
+      "legal_reference": "Articulo 4",
+      "applies_to": ["PROVIDER", "DEPLOYER"],
+      "effective_from": "2025-02-02",
+      "when": {"all": [{"path": "result.scope", "op": "equals", "value": "IN_SCOPE"}, {"path": "metadata.role", "op": "in", "value": ["PROVIDER", "DEPLOYER"]}]}
+    },
+    {
+      "code": "OBL_PROVIDER_HIGH_RISK_REQUIREMENTS",
+      "title": "Cumplir gestion de riesgos, datos, documentacion, registros, transparencia, supervision humana, robustez y ciberseguridad",
+      "legal_reference": "Articulos 8 a 15",
+      "applies_to": ["PROVIDER"],
+      "effective_from_result": true,
+      "when": {"all": [{"path": "result.classification.status", "op": "equals", "value": "HIGH_RISK"}, {"path": "metadata.role", "op": "equals", "value": "PROVIDER"}]}
+    },
+    {
+      "code": "OBL_PROVIDER_HIGH_RISK_GOVERNANCE",
+      "title": "Sistema de calidad, conservacion documental, logs, conformidad, registro y medidas correctoras",
+      "legal_reference": "Articulos 16 a 22 y 43 a 49",
+      "applies_to": ["PROVIDER"],
+      "effective_from_result": true,
+      "when": {"all": [{"path": "result.classification.status", "op": "equals", "value": "HIGH_RISK"}, {"path": "metadata.role", "op": "equals", "value": "PROVIDER"}]}
+    },
+    {
+      "code": "OBL_DEPLOYER_HIGH_RISK",
+      "title": "Usar conforme a instrucciones, asignar supervision humana, controlar entradas y funcionamiento y conservar logs",
+      "legal_reference": "Articulo 26",
+      "applies_to": ["DEPLOYER"],
+      "effective_from_result": true,
+      "when": {"all": [{"path": "result.classification.status", "op": "equals", "value": "HIGH_RISK"}, {"path": "metadata.role", "op": "equals", "value": "DEPLOYER"}]}
+    },
+    {
+      "code": "OBL_DEPLOYER_NOTIFY_PERSONS",
+      "title": "Informar a las personas de que estan sujetas al uso de un sistema de IA de alto riesgo",
+      "legal_reference": "Articulo 26.11",
+      "applies_to": ["DEPLOYER"],
+      "effective_from_result": true,
+      "when": {
+        "all": [
+          {"path": "result.classification.basis", "op": "equals", "value": "ARTICLE_6_2_ANNEX_III"},
+          {"path": "metadata.role", "op": "equals", "value": "DEPLOYER"},
+          {"any": [{"path": "answers.Q010", "op": "equals", "value": true}, {"path": "answers.Q011", "op": "equals", "value": true}]}
+        ]
+      }
+    },
+    {
+      "code": "OBL_FRIA",
+      "title": "Realizar una evaluacion de impacto sobre los derechos fundamentales antes del despliegue",
+      "legal_reference": "Articulo 27",
+      "applies_to": ["DEPLOYER"],
+      "effective_from_result": true,
+      "when": {
+        "all": [
+          {"path": "result.classification.basis", "op": "equals", "value": "ARTICLE_6_2_ANNEX_III"},
+          {"path": "metadata.role", "op": "equals", "value": "DEPLOYER"},
+          {"any": [
+            {"all": [{"path": "metadata.organisation_type", "op": "in", "value": ["PUBLIC_BODY", "PUBLIC_SERVICE"]}, {"path": "answers.Q008", "op": "not_equals", "value": "CRITICAL_INFRASTRUCTURE"}]},
+            {"path": "answers.Q009", "op": "in", "value": ["ESS_CREDIT", "ESS_INSURANCE"]}
+          ]}
+        ]
+      }
+    },
+    {
+      "code": "OBL_PUBLIC_REGISTER",
+      "title": "Registrar el uso del sistema en la base de datos correspondiente antes de utilizarlo",
+      "legal_reference": "Articulo 49.3 a 49.5",
+      "applies_to": ["DEPLOYER"],
+      "effective_from_result": true,
+      "when": {
+        "all": [
+          {"path": "result.classification.basis", "op": "equals", "value": "ARTICLE_6_2_ANNEX_III"},
+          {"path": "metadata.role", "op": "equals", "value": "DEPLOYER"},
+          {"path": "metadata.organisation_type", "op": "equals", "value": "PUBLIC_BODY"}
+        ]
+      }
+    },
+    {
+      "code": "OBL_ART_6_3_DOCUMENTATION",
+      "title": "Documentar la evaluacion que justifica que el sistema del Anexo III no es de alto riesgo y registrarlo",
+      "legal_reference": "Articulos 6.4 y 49.2",
+      "applies_to": ["PROVIDER"],
+      "effective_from": "2027-12-02",
+      "when": {"all": [{"path": "result.classification.basis", "op": "equals", "value": "ARTICLE_6_3_EXCEPTION"}, {"path": "metadata.role", "op": "equals", "value": "PROVIDER"}]}
+    },
+    {
+      "code": "OBL_ART_50_1",
+      "title": "Informar de la interaccion con IA",
+      "legal_reference": "Articulo 50.1",
+      "applies_to": ["PROVIDER"],
+      "effective_from": "2026-08-02",
+      "when": {"path": "result.transparency_codes", "op": "contains", "value": "ART_50_1"}
+    },
+    {
+      "code": "OBL_ART_50_2",
+      "title": "Marcar contenido sintetico en formato legible por maquinas y detectable",
+      "legal_reference": "Articulo 50.2",
+      "applies_to": ["PROVIDER"],
+      "effective_from_finding": "ART_50_2",
+      "when": {"path": "result.transparency_codes", "op": "contains", "value": "ART_50_2"}
+    },
+    {
+      "code": "OBL_ART_50_3",
+      "title": "Informar a las personas expuestas al reconocimiento emocional o categorizacion biometrica",
+      "legal_reference": "Articulo 50.3",
+      "applies_to": ["DEPLOYER"],
+      "effective_from": "2026-08-02",
+      "when": {"path": "result.transparency_codes", "op": "contains", "value": "ART_50_3"}
+    },
+    {
+      "code": "OBL_ART_50_4",
+      "title": "Revelar el contenido deepfake o el texto de interes publico generado o manipulado mediante IA",
+      "legal_reference": "Articulo 50.4",
+      "applies_to": ["DEPLOYER"],
+      "effective_from": "2026-08-02",
+      "when": {"path": "result.transparency_codes", "op": "contains_any", "value": ["ART_50_4_DEEPFAKE", "ART_50_4_TEXT"]}
+    }
+  ]
+}

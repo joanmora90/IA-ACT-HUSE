@@ -1,0 +1,172 @@
+publisher:
+  display_name: AI Act Validator
+  unique_name: aiactvalidator
+  prefix: aia
+
+solution:
+  display_name: AI Act Validator
+  unique_name: AIACTValidator
+  version: 0.1.0.0
+
+choices:
+  aia_actorrole:
+    PROVIDER: 100000000
+    DEPLOYER: 100000001
+    IMPORTER: 100000002
+    DISTRIBUTOR: 100000003
+    OTHER: 100000004
+  aia_organisationtype:
+    PUBLIC_BODY: 100000000
+    PUBLIC_SERVICE: 100000001
+    PRIVATE: 100000002
+    OTHER: 100000003
+  aia_assessmentstatus:
+    DRAFT: 100000000
+    IN_PROGRESS: 100000001
+    COMPLETED: 100000002
+    UNDER_REVIEW: 100000003
+    VALIDATED: 100000004
+    ARCHIVED: 100000005
+
+tables:
+  - logical_name: aia_project
+    display_name: Proyecto de IA
+    ownership: UserOwned
+    primary_name: aia_name
+    columns:
+      - {name: aia_name, type: String, max_length: 200, required: true}
+      - {name: aia_description, type: Memo, max_length: 10000}
+      - {name: aia_department, type: String, max_length: 200}
+      - {name: aia_businessowner, type: String, max_length: 200}
+      - {name: aia_organisationtype, type: Choice, choice: aia_organisationtype}
+      - {name: aia_actorrole, type: Choice, choice: aia_actorrole}
+      - {name: aia_plannedgolive, type: DateOnly}
+      - {name: aia_firstplacedonmarket, type: DateOnly}
+      - {name: aia_projectstatus, type: String, max_length: 50}
+
+  - logical_name: aia_assessment
+    display_name: Evaluacion AI Act
+    ownership: UserOwned
+    primary_name: aia_name
+    columns:
+      - {name: aia_name, type: String, max_length: 200, required: true}
+      - {name: aia_projectid, type: Lookup, target: aia_project, required: true}
+      - {name: aia_rulesetversion, type: String, max_length: 100, required: true}
+      - {name: aia_status, type: Choice, choice: aia_assessmentstatus}
+      - {name: aia_scope, type: String, max_length: 100}
+      - {name: aia_overallstatus, type: String, max_length: 100}
+      - {name: aia_classification, type: String, max_length: 100}
+      - {name: aia_classificationbasis, type: String, max_length: 200}
+      - {name: aia_assessmentdate, type: DateOnly, required: true}
+      - {name: aia_evaluatedon, type: DateTime}
+      - {name: aia_answersjson, type: Memo, max_length: 1048576}
+      - {name: aia_resultjson, type: Memo, max_length: 1048576}
+      - {name: aia_snapshothash, type: String, max_length: 128}
+
+  - logical_name: aia_question
+    display_name: Pregunta AI Act
+    ownership: OrganizationOwned
+    primary_name: aia_name
+    alternate_keys: [[aia_code, aia_rulesetversion]]
+    columns:
+      - {name: aia_name, type: String, max_length: 200, required: true}
+      - {name: aia_code, type: String, max_length: 20, required: true}
+      - {name: aia_rulesetversion, type: String, max_length: 100, required: true}
+      - {name: aia_section, type: String, max_length: 100}
+      - {name: aia_text, type: Memo, max_length: 10000, required: true}
+      - {name: aia_help, type: Memo, max_length: 10000}
+      - {name: aia_answertype, type: String, max_length: 50, required: true}
+      - {name: aia_legalreference, type: String, max_length: 500}
+      - {name: aia_sortorder, type: WholeNumber}
+      - {name: aia_active, type: Boolean, default: true}
+      - {name: aia_configjson, type: Memo, max_length: 1048576}
+
+  - logical_name: aia_answer
+    display_name: Respuesta AI Act
+    ownership: UserOwned
+    primary_name: aia_name
+    alternate_keys: [[aia_assessmentid, aia_questioncode]]
+    columns:
+      - {name: aia_name, type: String, max_length: 200, required: true}
+      - {name: aia_assessmentid, type: Lookup, target: aia_assessment, required: true}
+      - {name: aia_questioncode, type: String, max_length: 20, required: true}
+      - {name: aia_valuejson, type: Memo, max_length: 100000, required: true}
+      - {name: aia_answeredbyobjectid, type: String, max_length: 100}
+      - {name: aia_answeredon, type: DateTime, required: true}
+
+  - logical_name: aia_rule
+    display_name: Regla AI Act
+    ownership: OrganizationOwned
+    primary_name: aia_name
+    alternate_keys: [[aia_code, aia_rulesetversion]]
+    columns:
+      - {name: aia_name, type: String, max_length: 200, required: true}
+      - {name: aia_code, type: String, max_length: 100, required: true}
+      - {name: aia_rulesetversion, type: String, max_length: 100, required: true}
+      - {name: aia_priority, type: WholeNumber, required: true}
+      - {name: aia_conditionjson, type: Memo, max_length: 1048576, required: true}
+      - {name: aia_effectsjson, type: Memo, max_length: 1048576, required: true}
+      - {name: aia_legalreference, type: String, max_length: 500}
+      - {name: aia_effectivefrom, type: DateOnly}
+      - {name: aia_effectiveuntil, type: DateOnly}
+      - {name: aia_active, type: Boolean, default: true}
+
+  - logical_name: aia_obligation
+    display_name: Obligacion AI Act
+    ownership: OrganizationOwned
+    primary_name: aia_name
+    alternate_keys: [[aia_code, aia_rulesetversion]]
+    columns:
+      - {name: aia_name, type: String, max_length: 200, required: true}
+      - {name: aia_code, type: String, max_length: 100, required: true}
+      - {name: aia_rulesetversion, type: String, max_length: 100, required: true}
+      - {name: aia_title, type: Memo, max_length: 10000, required: true}
+      - {name: aia_legalreference, type: String, max_length: 500}
+      - {name: aia_appliesto, type: String, max_length: 500}
+      - {name: aia_effectivefrom, type: DateOnly}
+      - {name: aia_applicabilityjson, type: Memo, max_length: 1048576}
+      - {name: aia_active, type: Boolean, default: true}
+
+  - logical_name: aia_assessmentobligation
+    display_name: Obligacion de evaluacion
+    ownership: UserOwned
+    primary_name: aia_name
+    columns:
+      - {name: aia_name, type: String, max_length: 200, required: true}
+      - {name: aia_assessmentid, type: Lookup, target: aia_assessment, required: true}
+      - {name: aia_obligationcode, type: String, max_length: 100, required: true}
+      - {name: aia_status, type: String, max_length: 50}
+      - {name: aia_evidenceurl, type: Url, max_length: 2000}
+      - {name: aia_notes, type: Memo, max_length: 10000}
+
+  - logical_name: aia_ruletrace
+    display_name: Traza de regla
+    ownership: UserOwned
+    primary_name: aia_name
+    columns:
+      - {name: aia_name, type: String, max_length: 200, required: true}
+      - {name: aia_assessmentid, type: Lookup, target: aia_assessment, required: true}
+      - {name: aia_rulecode, type: String, max_length: 100, required: true}
+      - {name: aia_effect, type: String, max_length: 100}
+      - {name: aia_legalreference, type: String, max_length: 500}
+      - {name: aia_triggeredon, type: DateTime, required: true}
+
+  - logical_name: aia_legalsource
+    display_name: Fuente juridica
+    ownership: OrganizationOwned
+    primary_name: aia_name
+    alternate_keys: [[aia_code]]
+    columns:
+      - {name: aia_name, type: String, max_length: 300, required: true}
+      - {name: aia_code, type: String, max_length: 100, required: true}
+      - {name: aia_url, type: Url, max_length: 2000, required: true}
+      - {name: aia_validfrom, type: DateOnly}
+      - {name: aia_rulesetversion, type: String, max_length: 100}
+
+security_roles:
+  - name: AI Act - Usuario
+    permissions: [project:create_read_update_own, assessment:create_read_update_own, answer:create_read_update_own, reference:read]
+  - name: AI Act - Validador
+    permissions: [project:read_org, assessment:read_update_org, answer:read_org, obligation:update_org, reference:read]
+  - name: AI Act - Administrador juridico
+    permissions: [all_business_data:org, reference:create_read_update_delete]

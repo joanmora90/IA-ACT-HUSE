@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+.env
+data/*.db
+dist/
+build/
+power-platform/custom-connector/apiDefinition.swagger.json

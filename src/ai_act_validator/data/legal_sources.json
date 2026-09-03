@@ -1,0 +1,22 @@
+{
+  "ruleset": "EU_AI_ACT_2026_07_27_V0_1",
+  "valid_from": "2026-07-27",
+  "assessment_baseline": "2026-09-01",
+  "sources": [
+    {
+      "id": "EU_AI_ACT_CONSOLIDATED_2026_07_27",
+      "title": "Reglamento (UE) 2024/1689 - texto consolidado de 27/07/2026",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/2026-07-27/eng"
+    },
+    {
+      "id": "EU_COMMISSION_AI_ACT_TIMELINE_2026",
+      "title": "AI Act - calendario de aplicacion",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai"
+    },
+    {
+      "id": "EU_COMMISSION_HIGH_RISK_GUIDELINES_2026",
+      "title": "Guidelines for providers and deployers of AI high-risk systems",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/guidelines-ai-high-risk-systems"
+    }
+  ]
+}

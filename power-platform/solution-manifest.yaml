@@ -1,0 +1,19 @@
+solution: AIACTValidator
+version: 0.1.0.0
+components:
+  dataverse:
+    schema: ../../dataverse/model.yaml
+    seed:
+      - ../../dataverse/seed/legal_sources.csv
+      - ../../dataverse/seed/questions.csv
+      - ../../dataverse/seed/rules.csv
+      - ../../dataverse/seed/obligations.csv
+  custom_connector:
+    definition_template: custom-connector/apiDefinition.swagger.template.json
+    render_script: ../scripts/render_custom_connector.py
+  canvas_app:
+    name: AI Act Validator
+    specification: power-apps/app-spec.md
+    formulas: power-apps/formulas.md
+  cloud_flow:
+    specification: flow-spec.yaml

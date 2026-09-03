@@ -1,0 +1,240 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "AI Act Validator API",
+    "description": "Motor juridico determinista y versionado para Power Apps.",
+    "version": "0.1.0"
+  },
+  "host": "__API_HOST__",
+  "basePath": "/",
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "securityDefinitions": {
+    "oauth2": {
+      "type": "oauth2",
+      "flow": "accessCode",
+      "authorizationUrl": "https://login.microsoftonline.com/__TENANT_ID__/oauth2/v2.0/authorize",
+      "tokenUrl": "https://login.microsoftonline.com/__TENANT_ID__/oauth2/v2.0/token",
+      "scopes": {
+        "api://__API_CLIENT_ID__/user_impersonation": "Acceder al validador AI Act"
+      }
+    }
+  },
+  "security": [{"oauth2": ["api://__API_CLIENT_ID__/user_impersonation"]}],
+  "paths": {
+    "/api/v1/rules/version": {
+      "get": {
+        "operationId": "GetRulesVersion",
+        "summary": "Consultar version juridica",
+        "description": "Devuelve la version del ruleset activo.",
+        "x-ms-summary": "Consultar version juridica",
+        "responses": {
+          "200": {"description": "Version activa", "schema": {"$ref": "#/definitions/RulesVersion"}},
+          "401": {"description": "No autorizado"}
+        }
+      }
+    },
+    "/api/v1/power-platform/next-question": {
+      "post": {
+        "operationId": "GetNextQuestion",
+        "summary": "Obtener siguiente pregunta",
+        "description": "Calcula la siguiente pregunta a partir de las respuestas almacenadas en Dataverse.",
+        "x-ms-summary": "Obtener siguiente pregunta",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {"$ref": "#/definitions/PowerPlatformRequest"},
+            "x-ms-summary": "Evaluacion"
+          }
+        ],
+        "responses": {
+          "200": {"description": "Siguiente pregunta", "schema": {"$ref": "#/definitions/NextQuestionResponse"}},
+          "401": {"description": "No autorizado"},
+          "422": {"description": "Respuestas no validas"}
+        }
+      }
+    },
+    "/api/v1/power-platform/evaluate": {
+      "post": {
+        "operationId": "EvaluateAssessment",
+        "summary": "Evaluar proyecto",
+        "description": "Ejecuta el ruleset sobre las respuestas y devuelve clasificacion, obligaciones y trazas.",
+        "x-ms-summary": "Evaluar proyecto",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {"$ref": "#/definitions/PowerPlatformRequest"},
+            "x-ms-summary": "Evaluacion"
+          }
+        ],
+        "responses": {
+          "200": {"description": "Resultado", "schema": {"$ref": "#/definitions/AssessmentResult"}},
+          "401": {"description": "No autorizado"},
+          "422": {"description": "Respuestas no validas"}
+        }
+      }
+    },
+    "/api/v1/power-platform/report": {
+      "post": {
+        "operationId": "GenerateReportHtml",
+        "summary": "Generar informe HTML",
+        "description": "Genera el HTML que Power Automate puede convertir a PDF y archivar.",
+        "x-ms-summary": "Generar informe HTML",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {"$ref": "#/definitions/PowerPlatformRequest"},
+            "x-ms-summary": "Evaluacion"
+          }
+        ],
+        "responses": {
+          "200": {"description": "Informe", "schema": {"$ref": "#/definitions/ReportHtmlResponse"}},
+          "401": {"description": "No autorizado"},
+          "422": {"description": "Respuestas no validas"}
+        }
+      }
+    }
+  },
+  "definitions": {
+    "PowerPlatformAnswer": {
+      "type": "object",
+      "required": ["question_id", "value_json"],
+      "properties": {
+        "question_id": {"type": "string", "example": "Q001", "x-ms-summary": "Pregunta"},
+        "value_json": {"type": "string", "example": "true", "x-ms-summary": "Respuesta JSON"}
+      }
+    },
+    "PowerPlatformRequest": {
+      "type": "object",
+      "required": ["project_name", "organisation_type", "role", "assessment_date", "answers"],
+      "properties": {
+        "project_name": {"type": "string", "x-ms-summary": "Proyecto"},
+        "description": {"type": "string", "x-ms-summary": "Descripcion"},
+        "department": {"type": "string", "x-ms-summary": "Departamento"},
+        "owner": {"type": "string", "x-ms-summary": "Responsable"},
+        "organisation_type": {
+          "type": "string",
+          "enum": ["PUBLIC_BODY", "PUBLIC_SERVICE", "PRIVATE", "OTHER"],
+          "x-ms-summary": "Tipo de organizacion"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["PROVIDER", "DEPLOYER", "IMPORTER", "DISTRIBUTOR", "OTHER"],
+          "x-ms-summary": "Rol AI Act"
+        },
+        "assessment_date": {"type": "string", "format": "date", "x-ms-summary": "Fecha de evaluacion"},
+        "planned_go_live": {"type": "string", "format": "date", "x-ms-summary": "Puesta en produccion"},
+        "first_placed_on_market": {"type": "string", "format": "date", "x-ms-summary": "Primera puesta en mercado o servicio"},
+        "answers": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/PowerPlatformAnswer"},
+          "x-ms-summary": "Respuestas"
+        }
+      }
+    },
+    "QuestionOption": {
+      "type": "object",
+      "properties": {
+        "code": {"type": "string"},
+        "label": {"type": "string"}
+      }
+    },
+    "Question": {
+      "type": "object",
+      "properties": {
+        "id": {"type": "string"},
+        "section": {"type": "string"},
+        "text": {"type": "string"},
+        "answer_type": {"type": "string"},
+        "help": {"type": "string"},
+        "legal_reference": {"type": "string"},
+        "required": {"type": "boolean"},
+        "options": {"type": "array", "items": {"$ref": "#/definitions/QuestionOption"}}
+      }
+    },
+    "Classification": {
+      "type": "object",
+      "properties": {
+        "status": {"type": "string"},
+        "basis": {"type": "string"},
+        "area": {"type": "string"},
+        "use_case": {"type": "string"},
+        "effective_from": {"type": "string", "format": "date"},
+        "currently_enforceable": {"type": "boolean"}
+      }
+    },
+    "Finding": {
+      "type": "object",
+      "properties": {
+        "code": {"type": "string"},
+        "title": {"type": "string"},
+        "legal_reference": {"type": "string"},
+        "effective_from": {"type": "string", "format": "date"},
+        "currently_enforceable": {"type": "boolean"}
+      }
+    },
+    "Obligation": {
+      "type": "object",
+      "properties": {
+        "code": {"type": "string"},
+        "title": {"type": "string"},
+        "legal_reference": {"type": "string"},
+        "applies_to": {"type": "array", "items": {"type": "string"}},
+        "effective_from": {"type": "string", "format": "date"},
+        "currently_enforceable": {"type": "boolean"}
+      }
+    },
+    "RuleTrace": {
+      "type": "object",
+      "properties": {
+        "rule_id": {"type": "string"},
+        "legal_reference": {"type": "string"},
+        "effect": {"type": "string"}
+      }
+    },
+    "AssessmentResult": {
+      "type": "object",
+      "properties": {
+        "ruleset": {"type": "string"},
+        "evaluated_at": {"type": "string", "format": "date-time"},
+        "as_of_date": {"type": "string", "format": "date"},
+        "scope": {"type": "string"},
+        "overall_status": {"type": "string"},
+        "classification": {"$ref": "#/definitions/Classification"},
+        "prohibited_practices": {"type": "array", "items": {"$ref": "#/definitions/Finding"}},
+        "transparency": {"type": "array", "items": {"$ref": "#/definitions/Finding"}},
+        "obligations": {"type": "array", "items": {"$ref": "#/definitions/Obligation"}},
+        "recommendations": {"type": "array", "items": {"type": "string"}},
+        "rules_triggered": {"type": "array", "items": {"$ref": "#/definitions/RuleTrace"}},
+        "disclaimer": {"type": "string"}
+      }
+    },
+    "NextQuestionResponse": {
+      "type": "object",
+      "properties": {
+        "next_question": {"$ref": "#/definitions/Question"},
+        "completed": {"type": "boolean"},
+        "partial_result": {"$ref": "#/definitions/AssessmentResult"}
+      }
+    },
+    "ReportHtmlResponse": {
+      "type": "object",
+      "properties": {"html": {"type": "string"}}
+    },
+    "RulesVersion": {
+      "type": "object",
+      "properties": {
+        "ruleset": {"type": "string"},
+        "valid_from": {"type": "string", "format": "date"},
+        "assessment_baseline": {"type": "string", "format": "date"}
+      }
+    }
+  }
+}

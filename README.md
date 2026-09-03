@@ -48,6 +48,16 @@ docker compose up --build
 
 Este comando inicia tanto la API como la interfaz.
 
+## Publicar en Streamlit Community Cloud
+
+1. Conecta este repositorio desde Streamlit Community Cloud.
+2. Selecciona la rama `main`.
+3. Usa como archivo principal `src/ai_act_validator/ui.py`.
+4. No es necesario configurar secretos para el MVP.
+
+En Streamlit Cloud, la interfaz carga el motor juridico dentro del mismo proceso. Con Docker,
+la interfaz utiliza la API FastAPI independiente.
+
 ## Pruebas
 
 ```bash

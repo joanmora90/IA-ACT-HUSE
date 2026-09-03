@@ -1,0 +1,249 @@
+{
+  "ruleset": "EU_AI_ACT_2026_07_27_V0_1",
+  "rules": [
+    {
+      "id": "SCOPE_001_NO_EU_NEXUS",
+      "priority": 1000,
+      "when": {"path": "answers.Q001", "op": "equals", "value": false},
+      "effects": [{"type": "set_scope", "value": "OUT_OF_SCOPE", "basis": "Articulo 2"}],
+      "legal_reference": "Articulo 2"
+    },
+    {
+      "id": "SCOPE_002_NOT_AI",
+      "priority": 990,
+      "when": {"path": "answers.Q002", "op": "equals", "value": false},
+      "effects": [{"type": "set_scope", "value": "NOT_AI_SYSTEM", "basis": "Articulo 3.1"}],
+      "legal_reference": "Articulo 3.1"
+    },
+    {
+      "id": "SCOPE_003_EXCLUSION",
+      "priority": 980,
+      "when": {"path": "answers.Q003", "op": "in", "value": ["MILITARY_NATIONAL_SECURITY", "SCIENTIFIC_RESEARCH_ONLY", "PRE_MARKET_RND", "PERSONAL_NON_PROFESSIONAL"]},
+      "effects": [{"type": "set_scope", "value": "EXCLUDED", "basis": "Articulo 2"}],
+      "legal_reference": "Articulo 2"
+    },
+    {
+      "id": "SCOPE_004_OPEN_SOURCE_EXCLUSION",
+      "priority": 970,
+      "when": {
+        "all": [
+          {"path": "answers.Q003", "op": "equals", "value": "OPEN_SOURCE"},
+          {"path": "answers.Q004", "op": "contains", "value": "NONE"},
+          {"path": "answers.Q006", "op": "equals", "value": false},
+          {"path": "answers.Q008", "op": "equals", "value": "NONE"},
+          {"path": "answers.Q013", "op": "equals", "value": "NONE"},
+          {"path": "answers.Q014", "op": "contains", "value": "NONE"},
+          {"path": "answers.Q015", "op": "contains", "value": "NONE"}
+        ]
+      },
+      "effects": [{"type": "set_scope", "value": "EXCLUDED_OPEN_SOURCE", "basis": "Articulo 2.12"}],
+      "legal_reference": "Articulo 2.12"
+    },
+
+    {
+      "id": "PROHIBITED_5_1_A",
+      "priority": 900,
+      "when": {"path": "answers.Q004", "op": "contains", "value": "P01_MANIPULATION"},
+      "effects": [{"type": "add_prohibited", "code": "P01_MANIPULATION", "title": "Manipulacion perjudicial", "legal_reference": "Articulo 5.1(a)", "effective_from": "2025-02-02"}],
+      "legal_reference": "Articulo 5.1(a)"
+    },
+    {
+      "id": "PROHIBITED_5_1_B",
+      "priority": 900,
+      "when": {"path": "answers.Q004", "op": "contains", "value": "P02_VULNERABILITY"},
+      "effects": [{"type": "add_prohibited", "code": "P02_VULNERABILITY", "title": "Explotacion perjudicial de vulnerabilidades", "legal_reference": "Articulo 5.1(b)", "effective_from": "2025-02-02"}],
+      "legal_reference": "Articulo 5.1(b)"
+    },
+    {
+      "id": "PROHIBITED_5_1_BA",
+      "priority": 900,
+      "when": {"path": "answers.Q004", "op": "contains", "value": "P09_INTIMATE_CONTENT"},
+      "effects": [{"type": "add_prohibited", "code": "P09_INTIMATE_CONTENT", "title": "Contenido intimo o sexual sin consentimiento", "legal_reference": "Articulo 5.1(ba)", "effective_from": "2026-12-02"}],
+      "legal_reference": "Articulo 5.1(ba)"
+    },
+    {
+      "id": "PROHIBITED_5_1_BB",
+      "priority": 900,
+      "when": {
+        "all": [
+          {"path": "answers.Q004", "op": "contains", "value": "P10_CHILD_SEXUAL_CONTENT"},
+          {"path": "answers.Q005", "op": "not_contains", "value": "EX_P10_NATIONAL_LAW"}
+        ]
+      },
+      "effects": [{"type": "add_prohibited", "code": "P10_CHILD_SEXUAL_CONTENT", "title": "Material sexual relativo a menores", "legal_reference": "Articulo 5.1(bb)", "effective_from": "2026-12-02"}],
+      "legal_reference": "Articulo 5.1(bb)"
+    },
+    {
+      "id": "PROHIBITED_5_1_C",
+      "priority": 900,
+      "when": {"path": "answers.Q004", "op": "contains", "value": "P03_SOCIAL_SCORING"},
+      "effects": [{"type": "add_prohibited", "code": "P03_SOCIAL_SCORING", "title": "Puntuacion social perjudicial", "legal_reference": "Articulo 5.1(c)", "effective_from": "2025-02-02"}],
+      "legal_reference": "Articulo 5.1(c)"
+    },
+    {
+      "id": "PROHIBITED_5_1_D",
+      "priority": 900,
+      "when": {"path": "answers.Q004", "op": "contains", "value": "P04_CRIME_PREDICTION"},
+      "effects": [{"type": "add_prohibited", "code": "P04_CRIME_PREDICTION", "title": "Prediccion individual de delito basada solo en perfil o rasgos", "legal_reference": "Articulo 5.1(d)", "effective_from": "2025-02-02"}],
+      "legal_reference": "Articulo 5.1(d)"
+    },
+    {
+      "id": "PROHIBITED_5_1_E",
+      "priority": 900,
+      "when": {"path": "answers.Q004", "op": "contains", "value": "P05_FACE_SCRAPING"},
+      "effects": [{"type": "add_prohibited", "code": "P05_FACE_SCRAPING", "title": "Scraping indiscriminado para reconocimiento facial", "legal_reference": "Articulo 5.1(e)", "effective_from": "2025-02-02"}],
+      "legal_reference": "Articulo 5.1(e)"
+    },
+    {
+      "id": "PROHIBITED_5_1_F",
+      "priority": 900,
+      "when": {
+        "all": [
+          {"path": "answers.Q004", "op": "contains", "value": "P06_EMOTION_WORK_EDU"},
+          {"path": "answers.Q005", "op": "not_contains", "value": "EX_P06_MEDICAL_SAFETY"}
+        ]
+      },
+      "effects": [{"type": "add_prohibited", "code": "P06_EMOTION_WORK_EDU", "title": "Inferencia de emociones en trabajo o educacion", "legal_reference": "Articulo 5.1(f)", "effective_from": "2025-02-02"}],
+      "legal_reference": "Articulo 5.1(f)"
+    },
+    {
+      "id": "PROHIBITED_5_1_G",
+      "priority": 900,
+      "when": {"path": "answers.Q004", "op": "contains", "value": "P07_SENSITIVE_BIOMETRIC"},
+      "effects": [{"type": "add_prohibited", "code": "P07_SENSITIVE_BIOMETRIC", "title": "Categorizacion biometrica por atributos sensibles", "legal_reference": "Articulo 5.1(g)", "effective_from": "2025-02-02"}],
+      "legal_reference": "Articulo 5.1(g)"
+    },
+    {
+      "id": "PROHIBITED_5_1_H",
+      "priority": 900,
+      "when": {
+        "all": [
+          {"path": "answers.Q004", "op": "contains", "value": "P08_REALTIME_RBI"},
+          {"path": "answers.Q005", "op": "not_contains", "value": "EX_P08_STRICT_LAW_ENFORCEMENT"}
+        ]
+      },
+      "effects": [{"type": "add_prohibited", "code": "P08_REALTIME_RBI", "title": "Identificacion biometrica remota en tiempo real no exceptuada", "legal_reference": "Articulo 5.1(h)", "effective_from": "2025-02-02"}],
+      "legal_reference": "Articulo 5.1(h)"
+    },
+
+    {
+      "id": "HIGH_RISK_6_1",
+      "priority": 800,
+      "when": {"all": [{"path": "answers.Q006", "op": "equals", "value": true}, {"path": "answers.Q007", "op": "equals", "value": true}]},
+      "effects": [{"type": "set_classification", "status": "HIGH_RISK", "basis": "ARTICLE_6_1_ANNEX_I", "effective_from": "2028-08-02"}],
+      "legal_reference": "Articulo 6.1 y Anexo I"
+    },
+    {
+      "id": "HIGH_RISK_6_2_PROFILING",
+      "priority": 790,
+      "when": {"all": [{"path": "answers.Q009", "op": "not_equals", "value": "NONE"}, {"path": "answers.Q009", "op": "exists", "value": true}, {"path": "answers.Q010", "op": "equals", "value": true}]},
+      "effects": [{"type": "set_classification", "status": "HIGH_RISK", "basis": "ARTICLE_6_2_ANNEX_III", "area_from": "answers.Q008", "use_case_from": "answers.Q009", "effective_from": "2027-12-02"}],
+      "legal_reference": "Articulo 6.2, 6.3 y Anexo III"
+    },
+    {
+      "id": "HIGH_RISK_6_2_SIGNIFICANT",
+      "priority": 780,
+      "when": {"all": [{"path": "answers.Q009", "op": "not_equals", "value": "NONE"}, {"path": "answers.Q009", "op": "exists", "value": true}, {"path": "answers.Q010", "op": "equals", "value": false}, {"path": "answers.Q011", "op": "equals", "value": true}]},
+      "effects": [{"type": "set_classification", "status": "HIGH_RISK", "basis": "ARTICLE_6_2_ANNEX_III", "area_from": "answers.Q008", "use_case_from": "answers.Q009", "effective_from": "2027-12-02"}],
+      "legal_reference": "Articulo 6.2, 6.3 y Anexo III"
+    },
+    {
+      "id": "HIGH_RISK_6_2_NO_EXCEPTION",
+      "priority": 770,
+      "when": {"all": [{"path": "answers.Q009", "op": "not_equals", "value": "NONE"}, {"path": "answers.Q009", "op": "exists", "value": true}, {"path": "answers.Q010", "op": "equals", "value": false}, {"path": "answers.Q011", "op": "equals", "value": false}, {"path": "answers.Q012", "op": "equals", "value": "NONE"}]},
+      "effects": [{"type": "set_classification", "status": "HIGH_RISK", "basis": "ARTICLE_6_2_ANNEX_III", "area_from": "answers.Q008", "use_case_from": "answers.Q009", "effective_from": "2027-12-02"}],
+      "legal_reference": "Articulo 6.2, 6.3 y Anexo III"
+    },
+    {
+      "id": "NOT_HIGH_RISK_6_3",
+      "priority": 760,
+      "when": {
+        "all": [
+          {"path": "answers.Q009", "op": "not_equals", "value": "NONE"},
+          {"path": "answers.Q009", "op": "exists", "value": true},
+          {"path": "answers.Q010", "op": "equals", "value": false},
+          {"path": "answers.Q011", "op": "equals", "value": false},
+          {"path": "answers.Q012", "op": "in", "value": ["NARROW_PROCEDURAL", "IMPROVE_COMPLETED_HUMAN", "PATTERN_NO_REPLACEMENT", "PREPARATORY_TASK"]}
+        ]
+      },
+      "effects": [{"type": "set_classification", "status": "NOT_HIGH_RISK", "basis": "ARTICLE_6_3_EXCEPTION", "area_from": "answers.Q008", "use_case_from": "answers.Q009", "effective_from": "2027-12-02"}],
+      "legal_reference": "Articulos 6.3, 6.4 y 49.2"
+    },
+
+    {
+      "id": "TRANSPARENCY_50_1",
+      "priority": 500,
+      "when": {"path": "answers.Q013", "op": "equals", "value": "DIRECT_NOT_OBVIOUS"},
+      "effects": [{"type": "add_transparency", "code": "ART_50_1", "title": "Informar de la interaccion con un sistema de IA", "legal_reference": "Articulo 50.1", "effective_from": "2026-08-02"}],
+      "legal_reference": "Articulo 50.1"
+    },
+    {
+      "id": "TRANSPARENCY_50_2_CURRENT",
+      "priority": 500,
+      "when": {
+        "all": [
+          {"path": "answers.Q014", "op": "contains_any", "value": ["SYNTHETIC_TEXT", "SYNTHETIC_IMAGE", "SYNTHETIC_AUDIO", "SYNTHETIC_VIDEO"]},
+          {"path": "answers.Q014", "op": "not_contains", "value": "EX_ASSISTIVE_EDITING"},
+          {"path": "answers.Q014", "op": "not_contains", "value": "EX_AUTHORISED_LAW_ENFORCEMENT"},
+          {"any": [
+            {"path": "metadata.first_placed_on_market", "op": "is_null", "value": true},
+            {"path": "metadata.first_placed_on_market", "op": "on_or_after", "value": "2026-08-02"}
+          ]}
+        ]
+      },
+      "effects": [{"type": "add_transparency", "code": "ART_50_2", "title": "Marcar el contenido sintetico en formato detectable por maquinas", "legal_reference": "Articulo 50.2", "effective_from": "2026-08-02"}],
+      "legal_reference": "Articulo 50.2"
+    },
+    {
+      "id": "TRANSPARENCY_50_2_PREEXISTING",
+      "priority": 500,
+      "when": {
+        "all": [
+          {"path": "answers.Q014", "op": "contains_any", "value": ["SYNTHETIC_TEXT", "SYNTHETIC_IMAGE", "SYNTHETIC_AUDIO", "SYNTHETIC_VIDEO"]},
+          {"path": "answers.Q014", "op": "not_contains", "value": "EX_ASSISTIVE_EDITING"},
+          {"path": "answers.Q014", "op": "not_contains", "value": "EX_AUTHORISED_LAW_ENFORCEMENT"},
+          {"path": "metadata.first_placed_on_market", "op": "before", "value": "2026-08-02"}
+        ]
+      },
+      "effects": [{"type": "add_transparency", "code": "ART_50_2", "title": "Marcar el contenido sintetico en formato detectable por maquinas", "legal_reference": "Articulos 50.2 y 111.4", "effective_from": "2026-12-02"}],
+      "legal_reference": "Articulos 50.2 y 111.4"
+    },
+    {
+      "id": "TRANSPARENCY_50_3",
+      "priority": 500,
+      "when": {
+        "all": [
+          {"path": "answers.Q015", "op": "contains_any", "value": ["EMOTION_RECOGNITION", "BIOMETRIC_CATEGORISATION"]},
+          {"path": "answers.Q015", "op": "not_contains", "value": "EX_AUTHORISED_LAW_ENFORCEMENT"}
+        ]
+      },
+      "effects": [{"type": "add_transparency", "code": "ART_50_3", "title": "Informar a las personas expuestas a reconocimiento emocional o categorizacion biometrica", "legal_reference": "Articulo 50.3", "effective_from": "2026-08-02"}],
+      "legal_reference": "Articulo 50.3"
+    },
+    {
+      "id": "TRANSPARENCY_50_4_DEEPFAKE",
+      "priority": 500,
+      "when": {
+        "all": [
+          {"path": "answers.Q015", "op": "contains", "value": "DEEPFAKE"},
+          {"path": "answers.Q015", "op": "not_contains", "value": "EX_AUTHORISED_LAW_ENFORCEMENT"}
+        ]
+      },
+      "effects": [{"type": "add_transparency", "code": "ART_50_4_DEEPFAKE", "title": "Revelar que el deepfake ha sido generado o manipulado mediante IA", "legal_reference": "Articulo 50.4", "effective_from": "2026-08-02"}],
+      "legal_reference": "Articulo 50.4"
+    },
+    {
+      "id": "TRANSPARENCY_50_4_TEXT",
+      "priority": 500,
+      "when": {
+        "all": [
+          {"path": "answers.Q015", "op": "contains", "value": "PUBLIC_INTEREST_TEXT"},
+          {"path": "answers.Q015", "op": "not_contains", "value": "EDITORIAL_REVIEW_RESPONSIBILITY"},
+          {"path": "answers.Q015", "op": "not_contains", "value": "EX_AUTHORISED_LAW_ENFORCEMENT"}
+        ]
+      },
+      "effects": [{"type": "add_transparency", "code": "ART_50_4_TEXT", "title": "Revelar que el texto de interes publico ha sido generado o manipulado mediante IA", "legal_reference": "Articulo 50.4", "effective_from": "2026-08-02"}],
+      "legal_reference": "Articulo 50.4"
+    }
+  ]
+}

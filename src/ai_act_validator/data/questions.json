@@ -1,0 +1,281 @@
+{
+  "ruleset": "EU_AI_ACT_2026_07_27_V0_1",
+  "questions": [
+    {
+      "id": "Q001",
+      "section": "AMBITO",
+      "text": "¿El sistema se comercializa, se pone en servicio o se utiliza en la UE, o sus resultados se usan en la UE?",
+      "answer_type": "boolean",
+      "help": "Comprueba el nexo territorial del proyecto con la Union Europea.",
+      "legal_reference": "Articulo 2",
+      "default_next": "Q002",
+      "transitions": [{"when": {"path": "answers.Q001", "op": "equals", "value": false}, "target": "FINAL"}]
+    },
+    {
+      "id": "Q002",
+      "section": "AMBITO",
+      "text": "¿Es un sistema basado en maquinas que infiere como generar predicciones, contenido, recomendaciones o decisiones capaces de influir en un entorno?",
+      "answer_type": "boolean",
+      "help": "Usa la definicion vigente de sistema de IA; evita clasificar software convencional solo por automatizar reglas fijas.",
+      "legal_reference": "Articulo 3.1",
+      "default_next": "Q003",
+      "transitions": [{"when": {"path": "answers.Q002", "op": "equals", "value": false}, "target": "FINAL"}]
+    },
+    {
+      "id": "Q003",
+      "section": "AMBITO",
+      "text": "¿Concurre alguna exclusion del ambito del Reglamento?",
+      "answer_type": "choice",
+      "help": "La opcion de codigo abierto no excluye sistemas de alto riesgo ni los sujetos a los articulos 5 o 50.",
+      "legal_reference": "Articulo 2",
+      "options": [
+        {"code": "NONE", "label": "Ninguna"},
+        {"code": "MILITARY_NATIONAL_SECURITY", "label": "Uso exclusivamente militar, defensa o seguridad nacional"},
+        {"code": "SCIENTIFIC_RESEARCH_ONLY", "label": "Investigacion cientifica exclusiva"},
+        {"code": "PRE_MARKET_RND", "label": "I+D previa al mercado, sin pruebas en condiciones reales"},
+        {"code": "PERSONAL_NON_PROFESSIONAL", "label": "Actividad puramente personal y no profesional"},
+        {"code": "OPEN_SOURCE", "label": "Software libre o de codigo abierto"}
+      ],
+      "default_next": "Q004",
+      "transitions": [
+        {"when": {"path": "answers.Q003", "op": "in", "value": ["MILITARY_NATIONAL_SECURITY", "SCIENTIFIC_RESEARCH_ONLY", "PRE_MARKET_RND", "PERSONAL_NON_PROFESSIONAL"]}, "target": "FINAL"}
+      ]
+    },
+    {
+      "id": "Q004",
+      "section": "PROHIBICIONES",
+      "text": "Selecciona cualquier practica que describa el uso previsto del sistema.",
+      "answer_type": "multi_choice",
+      "help": "Selecciona solo supuestos cuyos elementos se cumplen realmente; las descripciones ya incorporan los requisitos esenciales del articulo 5.",
+      "legal_reference": "Articulo 5",
+      "options": [
+        {"code": "NONE", "label": "Ninguna"},
+        {"code": "P01_MANIPULATION", "label": "Manipulacion subliminal, engañosa o deliberada con perjuicio significativo"},
+        {"code": "P02_VULNERABILITY", "label": "Explotacion de vulnerabilidad por edad, discapacidad o situacion socioeconomica con perjuicio"},
+        {"code": "P03_SOCIAL_SCORING", "label": "Puntuacion social con trato perjudicial injustificado o fuera de contexto"},
+        {"code": "P04_CRIME_PREDICTION", "label": "Prediccion individual de delito basada solo en perfil o rasgos personales"},
+        {"code": "P05_FACE_SCRAPING", "label": "Base de reconocimiento facial creada o ampliada mediante scraping indiscriminado"},
+        {"code": "P06_EMOTION_WORK_EDU", "label": "Inferencia de emociones en trabajo o educacion"},
+        {"code": "P07_SENSITIVE_BIOMETRIC", "label": "Categorizacion biometrica para inferir atributos sensibles protegidos"},
+        {"code": "P08_REALTIME_RBI", "label": "Identificacion biometrica remota en tiempo real en espacio publico para fines policiales"},
+        {"code": "P09_INTIMATE_CONTENT", "label": "Contenido intimo o sexual realista de persona identificable sin consentimiento explicito"},
+        {"code": "P10_CHILD_SEXUAL_CONTENT", "label": "Material sexual relativo a menores generado o manipulado mediante IA"}
+      ],
+      "default_next": "Q005",
+      "transitions": [
+        {"when": {"path": "answers.Q004", "op": "contains", "value": "NONE"}, "target": "Q006"}
+      ]
+    },
+    {
+      "id": "Q005",
+      "section": "PROHIBICIONES",
+      "text": "¿Concurre alguna excepcion legal aplicable a las practicas seleccionadas?",
+      "answer_type": "multi_choice",
+      "help": "Las excepciones son estrictas. Deben documentarse y validarse juridicamente.",
+      "legal_reference": "Articulo 5",
+      "options": [
+        {"code": "NONE", "label": "Ninguna"},
+        {"code": "EX_P06_MEDICAL_SAFETY", "label": "Emociones en trabajo/educacion por motivos medicos o de seguridad"},
+        {"code": "EX_P08_STRICT_LAW_ENFORCEMENT", "label": "Identificacion en tiempo real estrictamente necesaria, autorizada y dentro de un supuesto legal"},
+        {"code": "EX_P10_NATIONAL_LAW", "label": "Defensa conforme al Derecho nacional para el supuesto del articulo 5.1(bb)"}
+      ],
+      "default_next": "Q006",
+      "transitions": []
+    },
+    {
+      "id": "Q006",
+      "section": "ALTO_RIESGO",
+      "text": "¿La IA es un producto o un componente de seguridad de un producto cubierto por el Anexo I?",
+      "answer_type": "boolean",
+      "help": "La funcion debe estar relacionada con la seguridad; la mera asistencia, optimizacion o comodidad no basta.",
+      "legal_reference": "Articulo 6.1 y Anexo I",
+      "default_next": "Q008",
+      "transitions": [{"when": {"path": "answers.Q006", "op": "equals", "value": true}, "target": "Q007"}]
+    },
+    {
+      "id": "Q007",
+      "section": "ALTO_RIESGO",
+      "text": "¿El producto requiere una evaluacion de conformidad por un tercero por riesgos relevantes para salud o seguridad?",
+      "answer_type": "boolean",
+      "help": "No cuenta una evaluacion exigida solo por motivos como espectro radioelectrico o interferencias sin efecto en salud o seguridad.",
+      "legal_reference": "Articulo 6.1(b), 6.1c",
+      "default_next": "Q008",
+      "transitions": [{"when": {"path": "answers.Q007", "op": "equals", "value": true}, "target": "Q013"}]
+    },
+    {
+      "id": "Q008",
+      "section": "ALTO_RIESGO",
+      "text": "¿En que ambito se utiliza el sistema?",
+      "answer_type": "choice",
+      "help": "Selecciona el ambito principal del caso de uso.",
+      "legal_reference": "Anexo III",
+      "options": [
+        {"code": "NONE", "label": "Ninguno de los ambitos listados"},
+        {"code": "BIOMETRICS", "label": "Biometria"},
+        {"code": "CRITICAL_INFRASTRUCTURE", "label": "Infraestructura critica"},
+        {"code": "EDUCATION", "label": "Educacion y formacion profesional"},
+        {"code": "EMPLOYMENT", "label": "Empleo y gestion de trabajadores"},
+        {"code": "ESSENTIAL_SERVICES", "label": "Servicios publicos o privados esenciales"},
+        {"code": "LAW_ENFORCEMENT", "label": "Fuerzas y cuerpos de seguridad"},
+        {"code": "MIGRATION", "label": "Migracion, asilo y fronteras"},
+        {"code": "JUSTICE_DEMOCRACY", "label": "Justicia y procesos democraticos"}
+      ],
+      "default_next": "Q009",
+      "transitions": [{"when": {"path": "answers.Q008", "op": "equals", "value": "NONE"}, "target": "Q013"}]
+    },
+    {
+      "id": "Q009",
+      "section": "ALTO_RIESGO",
+      "text": "Selecciona el caso de uso concreto.",
+      "answer_type": "dynamic_choice",
+      "help": "Las opciones se filtran automaticamente segun el ambito anterior.",
+      "legal_reference": "Anexo III",
+      "option_source": "Q008",
+      "option_groups": {
+        "BIOMETRICS": [
+          {"code": "BIO_REMOTE_IDENTIFICATION", "label": "Identificacion biometrica remota, no mera verificacion de identidad"},
+          {"code": "BIO_PROTECTED_CATEGORISATION", "label": "Categorizacion biometrica por atributos sensibles o protegidos"},
+          {"code": "BIO_EMOTION_RECOGNITION", "label": "Reconocimiento de emociones"},
+          {"code": "NONE", "label": "Ninguno"}
+        ],
+        "CRITICAL_INFRASTRUCTURE": [
+          {"code": "CRIT_SAFETY_COMPONENT", "label": "Componente de seguridad en infraestructura digital critica, trafico, agua, gas, calefaccion o electricidad"},
+          {"code": "NONE", "label": "Ninguno"}
+        ],
+        "EDUCATION": [
+          {"code": "EDU_ADMISSION", "label": "Acceso, admision o asignacion a centros"},
+          {"code": "EDU_OUTCOMES", "label": "Evaluacion de resultados de aprendizaje"},
+          {"code": "EDU_LEVEL", "label": "Determinacion del nivel educativo apropiado"},
+          {"code": "EDU_EXAM_MONITORING", "label": "Vigilancia o deteccion de conductas prohibidas en examenes"},
+          {"code": "NONE", "label": "Ninguno"}
+        ],
+        "EMPLOYMENT": [
+          {"code": "EMP_RECRUITMENT", "label": "Anuncios dirigidos, filtrado de solicitudes o evaluacion de candidatos"},
+          {"code": "EMP_WORK_DECISIONS", "label": "Condiciones, promocion, extincion, asignacion de tareas o evaluacion del rendimiento"},
+          {"code": "NONE", "label": "Ninguno"}
+        ],
+        "ESSENTIAL_SERVICES": [
+          {"code": "ESS_PUBLIC_BENEFITS_HEALTH", "label": "Elegibilidad, concesion o retirada de prestaciones y servicios publicos esenciales, incluida sanidad"},
+          {"code": "ESS_CREDIT", "label": "Evaluacion de solvencia o puntuacion crediticia, salvo fraude financiero"},
+          {"code": "ESS_INSURANCE", "label": "Riesgo o precio en seguros de vida o salud"},
+          {"code": "ESS_EMERGENCY_TRIAGE", "label": "Clasificacion de emergencias, despacho prioritario o triaje sanitario"},
+          {"code": "NONE", "label": "Ninguno"}
+        ],
+        "LAW_ENFORCEMENT": [
+          {"code": "LAW_VICTIM_RISK", "label": "Riesgo de que una persona sea victima de delito"},
+          {"code": "LAW_POLYGRAPH", "label": "Poligrafo o herramienta similar"},
+          {"code": "LAW_EVIDENCE", "label": "Fiabilidad de pruebas"},
+          {"code": "LAW_OFFENDING_RISK", "label": "Riesgo de delinquir o reincidir no basado solo en perfil"},
+          {"code": "LAW_PROFILING", "label": "Perfilado durante deteccion, investigacion o enjuiciamiento"},
+          {"code": "NONE", "label": "Ninguno"}
+        ],
+        "MIGRATION": [
+          {"code": "MIG_POLYGRAPH", "label": "Poligrafo o herramienta similar"},
+          {"code": "MIG_RISK", "label": "Evaluacion de riesgos de seguridad, migracion irregular o salud"},
+          {"code": "MIG_APPLICATIONS", "label": "Asistencia en solicitudes de asilo, visado o residencia"},
+          {"code": "MIG_IDENTIFICATION", "label": "Deteccion, reconocimiento o identificacion de personas, salvo verificar documentos"},
+          {"code": "NONE", "label": "Ninguno"}
+        ],
+        "JUSTICE_DEMOCRACY": [
+          {"code": "JUST_JUDICIAL_ASSISTANCE", "label": "Asistencia a autoridad judicial o resolucion alternativa de litigios"},
+          {"code": "JUST_ELECTION_INFLUENCE", "label": "Influencia sobre elecciones, referendos o conducta de voto"},
+          {"code": "NONE", "label": "Ninguno"}
+        ]
+      },
+      "default_next": "Q010",
+      "transitions": [{"when": {"path": "answers.Q009", "op": "equals", "value": "NONE"}, "target": "Q013"}]
+    },
+    {
+      "id": "Q010",
+      "section": "ALTO_RIESGO",
+      "text": "¿El sistema realiza perfilado de personas fisicas?",
+      "answer_type": "boolean",
+      "help": "Dentro de un caso del Anexo III, el perfilado impide aplicar la excepcion del articulo 6.3.",
+      "legal_reference": "Articulo 6.3",
+      "default_next": "Q011",
+      "transitions": [{"when": {"path": "answers.Q010", "op": "equals", "value": true}, "target": "Q013"}]
+    },
+    {
+      "id": "Q011",
+      "section": "ALTO_RIESGO",
+      "text": "¿Presenta riesgo significativo para salud, seguridad o derechos fundamentales, o influye materialmente en una decision?",
+      "answer_type": "boolean",
+      "help": "Valora el uso previsto, las personas afectadas y el peso real de la salida del sistema.",
+      "legal_reference": "Articulo 6.3",
+      "default_next": "Q012",
+      "transitions": [{"when": {"path": "answers.Q011", "op": "equals", "value": true}, "target": "Q013"}]
+    },
+    {
+      "id": "Q012",
+      "section": "ALTO_RIESGO",
+      "text": "¿Que condicion concreta del articulo 6.3 cumple el sistema?",
+      "answer_type": "choice",
+      "help": "Para quedar fuera de alto riesgo debe no existir riesgo significativo y cumplirse al menos una condicion.",
+      "legal_reference": "Articulo 6.3",
+      "options": [
+        {"code": "NONE", "label": "Ninguna"},
+        {"code": "NARROW_PROCEDURAL", "label": "Tarea procedimental limitada"},
+        {"code": "IMPROVE_COMPLETED_HUMAN", "label": "Mejora de una actividad humana ya finalizada"},
+        {"code": "PATTERN_NO_REPLACEMENT", "label": "Deteccion de patrones sin sustituir ni influir en la evaluacion humana previa"},
+        {"code": "PREPARATORY_TASK", "label": "Tarea preparatoria de una evaluacion del Anexo III"}
+      ],
+      "default_next": "Q013",
+      "transitions": []
+    },
+    {
+      "id": "Q013",
+      "section": "TRANSPARENCIA",
+      "text": "¿Como interactua el sistema directamente con personas fisicas?",
+      "answer_type": "choice",
+      "help": "Si la interaccion con IA no resulta obvia, debe informarse a la persona.",
+      "legal_reference": "Articulo 50.1",
+      "options": [
+        {"code": "NONE", "label": "No interactua directamente"},
+        {"code": "DIRECT_NOT_OBVIOUS", "label": "Interactua y no es obvio que sea IA"},
+        {"code": "DIRECT_OBVIOUS", "label": "Interactua, pero es evidente que es IA"},
+        {"code": "AUTHORISED_LAW_ENFORCEMENT", "label": "Uso policial autorizado con salvaguardas y no destinado a denuncias publicas"}
+      ],
+      "default_next": "Q014",
+      "transitions": []
+    },
+    {
+      "id": "Q014",
+      "section": "TRANSPARENCIA",
+      "text": "Selecciona el contenido sintetico que genera el sistema y, si procede, su excepcion.",
+      "answer_type": "multi_choice",
+      "help": "El proveedor debe permitir detectar el contenido generado o manipulado por IA, salvo excepciones concretas.",
+      "legal_reference": "Articulo 50.2",
+      "options": [
+        {"code": "NONE", "label": "No genera contenido sintetico"},
+        {"code": "SYNTHETIC_TEXT", "label": "Texto"},
+        {"code": "SYNTHETIC_IMAGE", "label": "Imagen"},
+        {"code": "SYNTHETIC_AUDIO", "label": "Audio"},
+        {"code": "SYNTHETIC_VIDEO", "label": "Video"},
+        {"code": "EX_ASSISTIVE_EDITING", "label": "Solo edicion asistida sin alteracion sustancial"},
+        {"code": "EX_AUTHORISED_LAW_ENFORCEMENT", "label": "Uso policial autorizado"}
+      ],
+      "default_next": "Q015",
+      "transitions": []
+    },
+    {
+      "id": "Q015",
+      "section": "TRANSPARENCIA",
+      "text": "Selecciona cualquier uso adicional sujeto a transparencia y sus posibles excepciones.",
+      "answer_type": "multi_choice",
+      "help": "Incluye reconocimiento emocional, categorizacion biometrica, deepfakes y texto de interes publico.",
+      "legal_reference": "Articulos 50.3 y 50.4",
+      "options": [
+        {"code": "NONE", "label": "Ninguno"},
+        {"code": "EMOTION_RECOGNITION", "label": "Reconocimiento de emociones"},
+        {"code": "BIOMETRIC_CATEGORISATION", "label": "Categorizacion biometrica"},
+        {"code": "DEEPFAKE", "label": "Deepfake de imagen, audio o video"},
+        {"code": "PUBLIC_INTEREST_TEXT", "label": "Texto publicado para informar sobre asuntos de interes publico"},
+        {"code": "ARTISTIC_CREATIVE_WORK", "label": "Deepfake en obra artistica, creativa, satirica o ficticia"},
+        {"code": "EDITORIAL_REVIEW_RESPONSIBILITY", "label": "Texto con revision humana y responsabilidad editorial"},
+        {"code": "EX_AUTHORISED_LAW_ENFORCEMENT", "label": "Uso policial autorizado"}
+      ],
+      "default_next": "FINAL",
+      "transitions": []
+    }
+  ]
+}

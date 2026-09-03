@@ -1,0 +1,29 @@
+name: PA_CreateAIActReport
+trigger:
+  type: PowerAppsV2
+  inputs:
+    - {name: assessment_id, type: text}
+    - {name: assessment_name, type: text}
+    - {name: report_html, type: text}
+actions:
+  - name: CreateHtmlFile
+    connector: SharePoint
+    operation: CreateFile
+    inputs:
+      folder: /AI-Act/Evaluaciones
+      filename: "@{triggerBody()['assessment_name']}.html"
+      content: "@{triggerBody()['report_html']}"
+  - name: UpdateAssessment
+    connector: Dataverse
+    operation: UpdateRow
+    inputs:
+      table: aia_assessment
+      row_id: "@{triggerBody()['assessment_id']}"
+      report_url: "@{outputs('CreateHtmlFile')?['body/Path']}"
+  - name: RespondToPowerApps
+    operation: RespondToPowerApps
+    outputs:
+      url: "@{outputs('CreateHtmlFile')?['body/Path']}"
+optional_pdf_conversion:
+  note: Convertir el HTML a PDF con el conector corporativo aprobado y guardar ambos archivos.
+

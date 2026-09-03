@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Informe AI Act - {{ assessment.metadata.project_name }}</title>
+  <style>
+    body { font-family: Arial, sans-serif; color: #17202a; margin: 40px; line-height: 1.45; }
+    h1, h2 { color: #123b66; }
+    .summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .card { border: 1px solid #d5dce5; border-radius: 8px; padding: 14px; }
+    .label { color: #5b6672; font-size: 12px; text-transform: uppercase; }
+    .value { font-size: 18px; font-weight: 700; margin-top: 4px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { border: 1px solid #d5dce5; padding: 8px; text-align: left; vertical-align: top; }
+    th { background: #eef4fa; }
+    .footnote { color: #5b6672; font-size: 12px; margin-top: 28px; }
+    @media print { body { margin: 18mm; } }
+  </style>
+</head>
+<body>
+  <h1>Informe de evaluacion inicial AI Act</h1>
+  <p><strong>Proyecto:</strong> {{ assessment.metadata.project_name }}</p>
+  <p>{{ assessment.metadata.description }}</p>
+
+  <div class="summary">
+    <div class="card"><div class="label">Estado</div><div class="value">{{ result.overall_status }}</div></div>
+    <div class="card"><div class="label">Clasificacion</div><div class="value">{{ result.classification.status }}</div></div>
+    <div class="card"><div class="label">Base</div><div class="value">{{ result.classification.basis or "-" }}</div></div>
+    <div class="card"><div class="label">Ruleset</div><div class="value">{{ result.ruleset }}</div></div>
+  </div>
+
+  <h2>Obligaciones identificadas</h2>
+  <table>
+    <thead><tr><th>Codigo</th><th>Obligacion</th><th>Base juridica</th><th>Aplicable desde</th></tr></thead>
+    <tbody>
+    {% for item in result.obligations %}
+      <tr><td>{{ item.code }}</td><td>{{ item.title }}</td><td>{{ item.legal_reference }}</td><td>{{ item.effective_from or "-" }}</td></tr>
+    {% else %}
+      <tr><td colspan="4">No se han identificado obligaciones en este cribado.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Reglas activadas</h2>
+  <table>
+    <thead><tr><th>Regla</th><th>Efecto</th><th>Base juridica</th></tr></thead>
+    <tbody>
+    {% for item in result.rules_triggered %}
+      <tr><td>{{ item.rule_id }}</td><td>{{ item.effect }}</td><td>{{ item.legal_reference }}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Respuestas</h2>
+  <table>
+    <thead><tr><th>Pregunta</th><th>Respuesta registrada</th></tr></thead>
+    <tbody>
+    {% for key, value in answers.items() %}
+      <tr><td>{{ key }}</td><td>{{ value }}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <p class="footnote">{{ result.disclaimer }}</p>
+</body>
+</html>
