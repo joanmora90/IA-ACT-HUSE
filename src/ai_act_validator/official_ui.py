@@ -54,6 +54,30 @@ def link_article_references(value: str) -> str:
     return ARTICLE_REFERENCE.sub(replace_reference, escaped)
 
 
+def link_article_references_markdown(value: str) -> str:
+    """Link legal references in labels rendered by Streamlit widgets."""
+
+    def replace_reference(match: re.Match[str]) -> str:
+        following = value[match.end() : match.end() + 240]
+        prefix = match.group("prefix")
+        numbers = match.group("numbers")
+
+        def replace_number(number_match: re.Match[str]) -> str:
+            article = number_match.group(0)
+            url = _article_url(article, following)
+            return f"[{article}]({url})"
+
+        linked_numbers = re.sub(r"\d+", replace_number, numbers)
+        return f"{prefix} {linked_numbers}"
+
+    return ARTICLE_REFERENCE.sub(replace_reference, value)
+
+
+def answer_option_markdown(option: dict[str, Any]) -> str:
+    translation = option["label_es"].replace("[", "\\[").replace("]", "\\]")
+    return f"{link_article_references_markdown(option['label'])}  \n:small[({translation})]"
+
+
 def bilingual_html(original: str, translation: str, css_class: str) -> str:
     translated = link_article_references(translation)
     return (
@@ -151,39 +175,25 @@ def render_start() -> None:
 
 
 def answer_widget(question: dict[str, Any]) -> list[int]:
-    option_numbers = list(range(1, len(question["options"]) + 1))
-    option_ids = {number: question["options"][number - 1]["id"] for number in option_numbers}
+    option_ids = [option["id"] for option in question["options"]]
+    options_by_id = {option["id"]: option for option in question["options"]}
     if question["type"] == "radio":
         selected = st.radio(
             "Respuesta",
-            option_numbers,
+            option_ids,
             index=None,
-            format_func=lambda number: f"Opción {number}",
+            format_func=lambda option_id: answer_option_markdown(options_by_id[option_id]),
         )
-        return [] if selected is None else [option_ids[selected]]
-    selected = st.multiselect(
-        "Respuesta",
-        option_numbers,
-        placeholder="Selecciona una o varias opciones",
-        format_func=lambda number: f"Opción {number}",
-    )
-    return [option_ids[number] for number in selected]
-
-
-def render_answer_options(question: dict[str, Any]) -> None:
-    for number, option in enumerate(question["options"], start=1):
-        st.markdown(
-            f"""
-            <div class="answer-card">
-              <span class="answer-number">{number}</span>
-              <div class="answer-copy">
-                <div>{link_article_references(option["label"])}</div>
-                <div class="translation">({link_article_references(option["label_es"])})</div>
-              </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        return [] if selected is None else [selected]
+    selected: list[int] = []
+    st.markdown("**Selecciona una o varias respuestas:**")
+    for option in question["options"]:
+        if st.checkbox(
+            answer_option_markdown(option),
+            key=f"answer_{question['id']}_{option['id']}",
+        ):
+            selected.append(option["id"])
+    return selected
 
 
 def render_question() -> None:
@@ -209,7 +219,6 @@ def render_question() -> None:
         with st.expander("Fuentes jurídicas"):
             st.markdown(question["sources"])
 
-    render_answer_options(question)
     with st.form(f"answer_{question['id']}"):
         selected = answer_widget(question)
         submitted = st.form_submit_button("Guardar y continuar", type="primary", width="stretch")
@@ -317,15 +326,10 @@ def run() -> None:
                           margin-top: 1.15rem;}
           .translation {font-size: .82rem; line-height: 1.45; color: #64748b;
                         margin-top: .2rem;}
-          .answer-card {display: flex; gap: .75rem; align-items: flex-start;
-                        padding: .8rem .9rem; margin: .55rem 0; border: 1px solid #dbe4ee;
-                        border-radius: 12px; background: #f8fafc;}
-          .answer-number {display: inline-flex; align-items: center; justify-content: center;
-                          min-width: 1.7rem; height: 1.7rem; border-radius: 999px;
-                          background: #145da0; color: white; font-weight: 700; font-size: .82rem;}
-          .answer-copy {line-height: 1.45; flex: 1;}
-          .question-title a, .question-text a, .answer-card a {color: #145da0;
-                                                               text-decoration: underline;}
+          .question-title a, .question-text a {color: #145da0; text-decoration: underline;}
+          [data-testid="stRadio"] label, [data-testid="stCheckbox"] label {
+            align-items: flex-start;
+          }
         </style>
         """,
         unsafe_allow_html=True,

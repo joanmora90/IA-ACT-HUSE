@@ -1,6 +1,6 @@
 # Estado del MVP
 
-- Version: `0.4.1`
+- Version: `0.4.2`
 - Ruleset principal: `EU_COMPLIANCE_CHECKER_2026_07_20`
 - 37 nodos y 45 resultados oficiales de la Comision Europea
 - Interfaz Streamlit adaptativa con motor oficial integrado

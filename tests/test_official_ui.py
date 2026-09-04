@@ -1,4 +1,8 @@
-from ai_act_validator.official_ui import bilingual_html, link_article_references
+from ai_act_validator.official_ui import (
+    answer_option_markdown,
+    bilingual_html,
+    link_article_references,
+)
 
 
 def test_links_ai_act_article_in_english_and_spanish():
@@ -31,3 +35,12 @@ def test_bilingual_html_places_translation_in_parentheses():
 
     assert 'class="translation">(Pregunta traducida)</div>' in rendered
     assert 'class="question-text">Official question</div>' in rendered
+
+
+def test_answer_option_is_directly_selectable_and_bilingual():
+    rendered = answer_option_markdown(
+        {"label": "AI system under Article 6", "label_es": "Sistema de IA"}
+    )
+
+    assert rendered.startswith("AI system under Article [6](https://")
+    assert rendered.endswith(":small[(Sistema de IA)]")
