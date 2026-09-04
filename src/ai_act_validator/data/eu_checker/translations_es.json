@@ -1,0 +1,357 @@
+{
+  "language": "es",
+  "notice": "Traducción propia orientativa. El texto oficial en inglés prevalece.",
+  "questions": {
+    "Q1": {
+      "main_title": "Comprobar un sistema de IA o un modelo de IA",
+      "secondary_title": "¿Quieres comprobar un modelo de IA o un sistema de IA?",
+      "answers": {
+        "0": "Modelo de IA",
+        "1": "Sistema de IA"
+      }
+    },
+    "QAIS 1.1": {
+      "main_title": "Sistema de IA: características",
+      "secondary_title": "¿Presenta tu sistema de IA estas características?",
+      "answers": {
+        "0": "El sistema de IA está basado en máquinas",
+        "1": "El sistema de IA está diseñado para funcionar con distintos niveles de autonomía",
+        "2": "El sistema de IA puede mostrar capacidad de adaptación tras su despliegue",
+        "3": "El sistema de IA infiere, a partir de las entradas que recibe, cómo generar resultados para objetivos explícitos o implícitos (los objetivos explícitos son metas claramente indicadas y codificadas directamente; los implícitos no se indican expresamente, pero pueden deducirse del comportamiento o de los supuestos subyacentes del sistema)",
+        "4": "Los resultados generados por el sistema de IA (por ejemplo, predicciones, recomendaciones o decisiones) pueden influir en entornos físicos o virtuales",
+        "5": "Ninguna de las anteriores"
+      }
+    },
+    "QAIS 1": {
+      "main_title": "Definición de sistema de IA",
+      "secondary_title": "¿Es tu sistema un sistema de IA en el sentido del Reglamento de IA?",
+      "answers": {
+        "0": "Sí",
+        "1": "No",
+        "2": "No estoy seguro"
+      }
+    },
+    "QAIS 2.1": {
+      "main_title": "Responsabilidades a lo largo de la cadena de valor de la IA",
+      "secondary_title": "Como distribuidor posterior, importador, responsable del despliegue o tercero, ¿has realizado alguna de las siguientes modificaciones en un sistema de IA?",
+      "answers": {
+        "0": "Has puesto tu nombre o marca en el sistema de IA",
+        "1": "Has realizado una modificación sustancial en un sistema de IA que ya se había introducido en el mercado o puesto en servicio",
+        "2": "Has modificado la finalidad prevista del sistema de IA de modo que pasa a ser un sistema de IA de alto riesgo",
+        "3": "Ninguna de las anteriores"
+      }
+    },
+    "QAIS 2.2": {
+      "main_title": "Responsabilidades a lo largo de la cadena de valor de la IA",
+      "secondary_title": "¿Tu producto integra un sistema de IA, o es en sí mismo un sistema de IA, y se da actualmente alguno de los siguientes supuestos?",
+      "answers": {
+        "0": "El sistema de IA se introduce en el mercado junto con el producto bajo tu nombre o marca",
+        "1": "El sistema de IA se pone en servicio bajo tu nombre o marca después de que el producto se haya introducido en el mercado",
+        "2": "Ninguna de las anteriores"
+      }
+    },
+    "QAIS 2": {
+      "main_title": "Tu rol en el Reglamento de IA",
+      "secondary_title": "¿Tú o tu organización desempeñáis alguno de los siguientes roles en la UE? Nota: si desempeñas varios roles, como proveedor y responsable del despliegue, completa la evaluación por separado para cada uno de ellos.",
+      "answers": {
+        "0": "Proveedor",
+        "1": "Responsable del despliegue",
+        "2": "Importador",
+        "3": "Distribuidor",
+        "4": "Representante autorizado",
+        "5": "Fabricante del producto",
+        "6": "Eres una persona física que utiliza un sistema de IA en una actividad puramente personal y no profesional"
+      }
+    },
+    "QAIS 3": {
+      "main_title": "¿Estás dentro del ámbito de aplicación del Reglamento de IA?",
+      "secondary_title": "¿Se cumple alguna de las siguientes afirmaciones?",
+      "answers": {
+        "0": "Tu sistema de IA se introduce en el mercado o se pone en servicio en la UE",
+        "1": "Estás establecido o situado en la UE",
+        "2": "Los resultados de tu sistema de IA se utilizan en la UE",
+        "3": "Un sistema de IA está integrado en tu producto bajo tu propio nombre o marca",
+        "4": "Ninguna de las anteriores"
+      }
+    },
+    "QAIS 4": {
+      "main_title": "Fuera del ámbito de aplicación: sistemas excluidos",
+      "secondary_title": "¿Cumple tu sistema de IA alguna de las siguientes descripciones?",
+      "answers": {
+        "0": "El sistema de IA se desarrolla y utiliza exclusivamente con fines militares, de defensa o de seguridad nacional",
+        "1": "El sistema de IA lo utilizan autoridades públicas de terceros países u organizaciones internacionales en el marco de la cooperación internacional policial y judicial",
+        "2": "El sistema de IA se desarrolla y pone en servicio específicamente con la única finalidad de investigación y desarrollo científicos",
+        "3": "El sistema de IA se utiliza en actividades de investigación, ensayo o desarrollo y aún no se ha introducido en el mercado ni puesto en servicio",
+        "4": "Ninguna de las anteriores"
+      }
+    },
+    "QAIS 5": {
+      "main_title": "Sistemas de IA prohibidos por el Reglamento de IA",
+      "secondary_title": "¿Encaja tu sistema de IA en alguna de estas prácticas de IA?",
+      "answers": {
+        "0": "El sistema de IA emplea técnicas subliminales, manipuladoras o engañosas para distorsionar sustancialmente el comportamiento de una persona, con probabilidad de causarle un perjuicio significativo",
+        "1": "El sistema de IA explota vulnerabilidades debidas a la edad, la discapacidad o una situación socioeconómica específica para distorsionar sustancialmente el comportamiento de una persona, con probabilidad de causarle un perjuicio significativo",
+        "2": "El sistema de IA realiza calificación social que conduce a un trato perjudicial o desfavorable de determinadas personas físicas o grupos de personas",
+        "3": "El sistema de IA evalúa y predice el riesgo individual de que una persona física cometa un delito basándose únicamente en la elaboración de perfiles o en la evaluación de rasgos y características de personalidad",
+        "4": "Extracción no selectiva, mediante IA, de imágenes faciales de internet o de circuitos cerrados de televisión para crear o ampliar bases de datos",
+        "5": "El sistema de IA realiza reconocimiento de emociones en centros de trabajo o educativos (salvo cuando se usa por motivos médicos o de seguridad)",
+        "6": "Categorización biométrica para deducir atributos sensibles, como opiniones políticas, creencias religiosas u orientación sexual",
+        "7": "Uso de identificación biométrica remota en tiempo real en espacios de acceso público con fines policiales, salvo autorización expresa de la legislación nacional basada en el Reglamento de IA",
+        "8": "El sistema de IA genera o manipula imágenes, vídeos, audios o materiales similares realistas de las partes íntimas de una persona física identificable, o de una persona identificable participando en actividades sexualmente explícitas, sin su consentimiento libre, específico, informado, inequívoco y explícito",
+        "9": "El sistema de IA genera o manipula material o representaciones en el sentido del artículo 2, letras c) y e), de la Directiva 2011/93/UE relativa a la lucha contra los abusos sexuales y la explotación sexual de los menores y la pornografía infantil",
+        "10": "Ninguna de las anteriores"
+      }
+    },
+    "QAIS 6.1": {
+      "main_title": "Reglas de clasificación de los sistemas de IA de alto riesgo (anexo I, sección A, del Reglamento de IA)",
+      "secondary_title": "¿Está regulado en alguno de los sectores que se enumeran a continuación?",
+      "answers": {
+        "0": "Juguetes",
+        "1": "Embarcaciones de recreo y motos acuáticas",
+        "2": "Ascensores y componentes de seguridad para ascensores",
+        "3": "Aparatos y sistemas de protección para uso en atmósferas potencialmente explosivas",
+        "4": "Equipos radioeléctricos",
+        "5": "Equipos a presión",
+        "6": "Instalaciones de transporte por cable",
+        "7": "Equipos de protección individual",
+        "8": "Aparatos que queman combustibles gaseosos",
+        "9": "Productos sanitarios",
+        "10": "Productos sanitarios para diagnóstico in vitro",
+        "11": "Ninguna de las anteriores"
+      }
+    },
+    "QAIS 6.2": {
+      "main_title": "Evaluación de la conformidad por un tercero",
+      "secondary_title": "¿Tu producto, o el producto en el que el sistema de IA está destinado a utilizarse como componente de seguridad, debe someterse a una evaluación de la conformidad por un tercero conforme a la legislación sectorial? Esto también incluye los productos que pueden quedar exentos de dicha evaluación cuando se aplican plenamente normas armonizadas.",
+      "answers": {
+        "0": "Sí",
+        "1": "No"
+      }
+    },
+    "QAIS 6.2.1": {
+      "main_title": "Evaluación de la conformidad por un tercero exigida únicamente por riesgos distintos de los riesgos para la salud y la seguridad",
+      "secondary_title": "¿Tu producto debe someterse a una evaluación de la conformidad por un tercero únicamente por riesgos distintos de los riesgos para la salud y la seguridad, en particular riesgos relativos a la distribución del espectro radioeléctrico o a interferencias electromagnéticas que no afectan a la salud y la seguridad?",
+      "answers": {
+        "0": "Sí",
+        "1": "No"
+      }
+    },
+    "QAIS 6.3": {
+      "main_title": "Reglas de clasificación de los sistemas de IA de alto riesgo (anexo I, sección B, del Reglamento de IA)",
+      "secondary_title": "¿Tu sistema de IA, o el producto en el que está destinado a utilizarse como componente de seguridad, está sujeto a normativa sectorial y clasificado en alguno de los sectores siguientes?",
+      "answers": {
+        "0": "Seguridad de la aviación civil",
+        "1": "Vehículos de dos o tres ruedas y cuatriciclos",
+        "2": "Vehículos agrícolas y forestales",
+        "3": "Equipos marinos",
+        "4": "Interoperabilidad de los sistemas ferroviarios",
+        "5": "Vehículos de motor y sus remolques",
+        "6": "Aviación civil",
+        "7": "Máquinas",
+        "8": "Ninguna de las anteriores"
+      }
+    },
+    "QAIS 6.4.1": {
+      "main_title": "Biometría",
+      "secondary_title": "¿Está destinado tu sistema de IA a alguno de los siguientes casos de uso? Nota: su uso debe estar permitido por la legislación pertinente de la UE o nacional.",
+      "answers": {
+        "0": "Sistemas de identificación biométrica remota",
+        "1": "Sistemas de IA destinados a la categorización biométrica según atributos o características sensibles o protegidos, basándose en la inferencia de dichos atributos o características",
+        "2": "Sistemas de IA destinados al reconocimiento de emociones",
+        "3": "Ninguna de las anteriores"
+      }
+    },
+    "QAIS 6.4.2": {
+      "main_title": "Educación y formación profesional",
+      "secondary_title": "¿Está destinado tu sistema de IA a alguno de los siguientes casos de uso?",
+      "answers": {
+        "0": "Sistemas de IA destinados a determinar el acceso o la admisión, o a asignar personas físicas a centros educativos y de formación profesional de todos los niveles",
+        "1": "Sistemas de IA destinados a evaluar resultados de aprendizaje, también cuando dichos resultados se utilicen para orientar el proceso de aprendizaje de personas físicas en centros educativos y de formación profesional de todos los niveles",
+        "2": "Sistemas de IA destinados a evaluar el nivel de educación adecuado que una persona recibirá o al que podrá acceder, en el contexto o dentro de centros educativos y de formación profesional de todos los niveles",
+        "3": "Sistemas de IA destinados a vigilar y detectar conductas prohibidas de estudiantes durante exámenes en el contexto o dentro de centros educativos y de formación profesional de todos los niveles",
+        "4": "Ninguna de las anteriores"
+      }
+    },
+    "QAIS 6.4.3": {
+      "main_title": "Empleo, gestión de los trabajadores y acceso al autoempleo",
+      "secondary_title": "¿Está destinado tu sistema de IA a alguno de los siguientes casos de uso?",
+      "answers": {
+        "0": "Sistemas de IA destinados a la contratación o selección de personas físicas, en particular para publicar anuncios de empleo dirigidos, analizar y filtrar solicitudes de empleo y evaluar candidatos",
+        "1": "Sistemas de IA destinados a tomar decisiones que afecten a las condiciones de las relaciones laborales, a la promoción o extinción de relaciones contractuales laborales; a asignar tareas según el comportamiento individual o rasgos y características personales; o a vigilar y evaluar el rendimiento y comportamiento de las personas en esas relaciones",
+        "2": "Ninguna de las anteriores"
+      }
+    },
+    "QAIS 6.4.4": {
+      "main_title": "Acceso y disfrute de servicios privados esenciales y servicios y prestaciones públicos esenciales",
+      "secondary_title": "¿Está destinado tu sistema de IA a alguno de los siguientes casos de uso?",
+      "answers": {
+        "0": "Sistemas de IA destinados a ser utilizados por autoridades públicas o en su nombre para evaluar la admisibilidad de personas físicas respecto de prestaciones y servicios esenciales de asistencia pública, incluidos los servicios sanitarios, así como para conceder, reducir, revocar o reclamar dichas prestaciones y servicios",
+        "1": "Sistemas de IA destinados a evaluar la solvencia de personas físicas o determinar su calificación crediticia, salvo los utilizados para detectar fraudes financieros",
+        "2": "Sistemas de IA destinados a la evaluación de riesgos y fijación de precios en relación con personas físicas en seguros de vida y de salud",
+        "3": "Sistemas de IA destinados a evaluar y clasificar llamadas de emergencia de personas físicas o a enviar servicios de primera intervención, o establecer la prioridad de su envío, incluidos policía, bomberos y asistencia médica, así como sistemas de triaje de pacientes para atención sanitaria de urgencia",
+        "4": "Ninguna de las anteriores"
+      }
+    },
+    "QAIS 6.4.5": {
+      "main_title": "Actividad policial",
+      "secondary_title": "¿Está destinado tu sistema de IA a alguno de los siguientes casos de uso?",
+      "answers": {
+        "0": "Sistemas de IA destinados a ser utilizados por autoridades policiales o en su nombre, o por instituciones, órganos y organismos de la Unión en apoyo de dichas autoridades o en su nombre, para evaluar el riesgo de que una persona física sea víctima de delitos",
+        "1": "Sistemas de IA destinados a ser utilizados por autoridades policiales o en su nombre, o por instituciones, órganos y organismos de la Unión en apoyo de dichas autoridades, como polígrafos o herramientas similares",
+        "2": "Sistemas de IA destinados a ser utilizados por autoridades policiales o en su nombre, o por instituciones, órganos y organismos de la Unión en apoyo de dichas autoridades, para evaluar la fiabilidad de las pruebas durante la investigación o el enjuiciamiento de delitos",
+        "3": "Sistemas de IA destinados a ser utilizados por autoridades policiales o en su nombre, o por instituciones, órganos y organismos de la Unión en apoyo de dichas autoridades, para evaluar el riesgo de que una persona física cometa o reincida en un delito sin basarse únicamente en la elaboración de perfiles indicada en el artículo 3, apartado 4, de la Directiva (UE) 2016/680, o para evaluar rasgos y características de personalidad o el comportamiento delictivo pasado de personas físicas o grupos",
+        "4": "Sistemas de IA destinados a ser utilizados por autoridades policiales o en su nombre, o por instituciones, órganos y organismos de la Unión en apoyo de dichas autoridades, para elaborar perfiles de personas físicas según el artículo 3, apartado 4, de la Directiva (UE) 2016/680 durante la detección, investigación o enjuiciamiento de delitos",
+        "5": "Ninguna de las anteriores"
+      }
+    },
+    "QAIS 6.4.6": {
+      "main_title": "Gestión de la migración, el asilo y el control fronterizo",
+      "secondary_title": "¿Está destinado tu sistema de IA a alguno de los siguientes casos de uso?",
+      "answers": {
+        "0": "Sistemas de IA destinados a ser utilizados por autoridades públicas competentes o en su nombre, o por instituciones, órganos y organismos de la Unión, como polígrafos o herramientas similares",
+        "1": "Sistemas de IA destinados a ser utilizados por autoridades públicas competentes o en su nombre, o por instituciones, órganos y organismos de la Unión, para evaluar un riesgo —incluidos los de seguridad, migración irregular o salud— que plantea una persona física que pretende entrar o ha entrado en el territorio de un Estado miembro",
+        "2": "Sistemas de IA destinados a ser utilizados por autoridades públicas competentes o en su nombre, o por instituciones, órganos y organismos de la Unión, para asistir en el examen de solicitudes de asilo, visado o permisos de residencia y de las reclamaciones asociadas respecto de la admisibilidad de las personas solicitantes, incluidas las evaluaciones de fiabilidad de las pruebas",
+        "3": "Sistemas de IA destinados a ser utilizados por autoridades públicas competentes o en su nombre, o por instituciones, órganos y organismos de la Unión, en la gestión de la migración, el asilo o el control fronterizo para detectar, reconocer o identificar personas físicas, excepto la verificación de documentos de viaje",
+        "4": "Ninguna de las anteriores"
+      }
+    },
+    "QAIS 6.4.7": {
+      "main_title": "Administración de justicia y procesos democráticos",
+      "secondary_title": "¿Está destinado tu sistema de IA a alguno de los siguientes casos de uso?",
+      "answers": {
+        "0": "Sistemas de IA destinados a ser utilizados por una autoridad judicial o en su nombre para ayudarla a investigar e interpretar hechos y normas, y a aplicar la ley a un conjunto concreto de hechos, o a utilizarse de forma similar en la resolución alternativa de litigios",
+        "1": "Sistemas de IA destinados a influir en el resultado de elecciones o referendos o en el comportamiento electoral de personas físicas al ejercer su voto. No incluye sistemas cuyos resultados no se muestran directamente a las personas físicas, como herramientas para organizar, optimizar o estructurar campañas políticas desde un punto de vista administrativo o logístico",
+        "2": "Ninguna de las anteriores"
+      }
+    },
+    "QAIS 6.4": {
+      "main_title": "Reglas de clasificación de los sistemas de IA de alto riesgo (anexo III del Reglamento de IA)",
+      "secondary_title": "¿Se encuentra tu sistema de IA en alguno de los ámbitos siguientes?",
+      "answers": {
+        "0": "Infraestructuras críticas: sistemas de IA destinados a utilizarse como componentes de seguridad en la gestión y explotación de infraestructuras digitales críticas, del tráfico rodado o del suministro de agua, gas, calefacción o electricidad",
+        "1": "Biometría",
+        "2": "Educación y formación profesional",
+        "3": "Empleo, gestión de los trabajadores y acceso al autoempleo",
+        "4": "Acceso y disfrute de servicios privados esenciales y servicios y prestaciones públicos esenciales",
+        "5": "Actividad policial",
+        "6": "Gestión de la migración, el asilo y el control fronterizo",
+        "7": "Administración de justicia y procesos democráticos",
+        "8": "Ninguna de las anteriores"
+      }
+    },
+    "QAIS 6.5": {
+      "main_title": "Excepciones del anexo III",
+      "secondary_title": "¿Podría tu sistema de IA quedar exceptuado de la clasificación de alto riesgo por no plantear un riesgo significativo de perjuicio para la salud, la seguridad o los derechos fundamentales de las personas físicas? Nota: un sistema de IA mencionado en el anexo III siempre se considerará de alto riesgo cuando realice elaboración de perfiles de personas físicas (artículo 6, apartado 3, del Reglamento de IA).",
+      "answers": {
+        "0": "Sí. El sistema de IA está destinado a realizar una tarea procedimental limitada",
+        "1": "Sí. El sistema de IA está destinado a mejorar el resultado de una actividad humana previamente finalizada",
+        "2": "Sí. El sistema de IA está destinado a detectar patrones de toma de decisiones o desviaciones respecto de patrones anteriores, sin sustituir ni influir en la evaluación humana previamente finalizada y con una revisión humana adecuada",
+        "3": "Sí. El sistema de IA está destinado a realizar una tarea preparatoria de una evaluación pertinente para los casos de uso enumerados en el anexo III",
+        "4": "Ninguna de las anteriores"
+      }
+    },
+    "QAIS 6.5.1": {
+      "main_title": "Elaboración de perfiles de personas físicas",
+      "secondary_title": "¿Realiza tu sistema de IA elaboración de perfiles de personas físicas?",
+      "answers": {
+        "0": "Sí",
+        "1": "No"
+      }
+    },
+    "QAIS 6": {
+      "main_title": "Reglas de clasificación de los sistemas de IA de alto riesgo",
+      "secondary_title": "¿Tu sistema de IA, o el producto en el que está destinado a integrarse, está sujeto a normativa sectorial?",
+      "answers": {
+        "0": "Sí",
+        "1": "No",
+        "2": "No estoy seguro"
+      }
+    },
+    "QAIS 6.0.1": {
+      "main_title": "Componente de seguridad",
+      "secondary_title": "¿Cumple tu sistema de IA una función de seguridad? Nota: no es así, por ejemplo, si se utiliza únicamente para aspectos no relacionados con la seguridad, como asistencia al usuario, optimización del rendimiento, eficiencia del servicio, automatización, comodidad o control de calidad.",
+      "answers": {
+        "0": "Sí",
+        "1": "No"
+      }
+    },
+    "QAIS 6.0.2": {
+      "main_title": "Componente de seguridad",
+      "secondary_title": "¿Un fallo o funcionamiento defectuoso del sistema de IA pondría en peligro la salud o la seguridad?",
+      "answers": {
+        "0": "Sí",
+        "1": "No"
+      }
+    },
+    "QAIS 7.1": {
+      "main_title": "Obligaciones de transparencia de determinados sistemas de IA según el Reglamento de IA",
+      "secondary_title": "¿Realiza tu sistema de IA alguna de estas funciones?",
+      "answers": {
+        "0": "El sistema de IA interactúa directamente con personas físicas",
+        "1": "El sistema de IA genera contenidos sintéticos de audio, imagen, vídeo o texto",
+        "2": "Ninguna de las anteriores"
+      }
+    },
+    "QAIS 7.2": {
+      "main_title": "Obligaciones de transparencia de determinados sistemas de IA según el Reglamento de IA",
+      "secondary_title": "¿Realiza tu sistema de IA alguna de estas funciones?",
+      "answers": {
+        "0": "El sistema de IA es un sistema de reconocimiento de emociones o de categorización biométrica",
+        "1": "El sistema de IA genera o manipula contenidos de imagen, audio o vídeo que parecerían falsamente auténticos a una persona (ultrafalsificación o deepfake)",
+        "2": "El sistema de IA genera o manipula texto que se publica con la finalidad de informar al público sobre asuntos de interés público",
+        "3": "Ninguna de las anteriores"
+      }
+    },
+    "QAIS 8": {
+      "main_title": "Licencias libres y de código abierto",
+      "secondary_title": "¿Se publica tu sistema de IA con una licencia libre y de código abierto?",
+      "answers": {
+        "0": "Sí",
+        "1": "No"
+      }
+    },
+    "QGPAI 1": {
+      "main_title": "Modelos de IA de uso general",
+      "secondary_title": "¿Cumple tu modelo de IA la definición de modelo de IA de uso general del Reglamento de IA?",
+      "answers": {
+        "0": "Sí",
+        "1": "No"
+      }
+    },
+    "QGPAI 2": {
+      "main_title": "Modelos que presentan riesgo sistémico",
+      "secondary_title": "¿Cuál de las siguientes afirmaciones se aplica a tu modelo de IA de uso general?",
+      "answers": {
+        "0": "El modelo tiene capacidades de gran impacto",
+        "1": "La Comisión ha designado el modelo como modelo que presenta un riesgo sistémico",
+        "2": "Ninguna de las anteriores"
+      }
+    },
+    "QGPAI 3": {
+      "main_title": "Tu rol según el Reglamento de IA",
+      "secondary_title": "¿Cuál es tu rol?",
+      "answers": {
+        "0": "Proveedor de un modelo de IA de uso general",
+        "1": "Representante autorizado de un proveedor de un modelo de IA de uso general",
+        "2": "Modificador posterior de un modelo de IA de uso general",
+        "3": "Ninguna de las anteriores"
+      }
+    },
+    "QGPAI 3.1": {
+      "main_title": "Modificaciones posteriores",
+      "secondary_title": "¿Tu modificación produce un cambio significativo en el carácter general, las capacidades o el riesgo sistémico del modelo?",
+      "answers": {
+        "0": "Sí",
+        "1": "No"
+      }
+    },
+    "QGPAI 7": {
+      "main_title": "Excepciones para el código abierto",
+      "secondary_title": "¿Cumple tu modelo los requisitos de las excepciones para el código abierto?",
+      "answers": {
+        "0": "Sí",
+        "1": "No"
+      }
+    }
+  }
+}

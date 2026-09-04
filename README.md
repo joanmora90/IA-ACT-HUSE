@@ -12,6 +12,10 @@ La interfaz principal usa el arbol, las preguntas, las rutas y los resultados de
 45 resultados, con version oficial de 20 de julio de 2026. El resultado es informativo y
 no sustituye la revision juridica.
 
+Cada pregunta y respuesta mantiene el texto oficial en ingles e incorpora debajo una
+traduccion propia orientativa al espanol. Las referencias a articulos son enlaces directos
+al AI Act Explorer o, cuando corresponde, a EUR-Lex.
+
 Fuente y licencia: consulta `EU_SOURCE_ATTRIBUTION.md`.
 
 ## Inicio rapido en Windows

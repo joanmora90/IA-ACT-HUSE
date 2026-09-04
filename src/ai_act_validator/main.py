@@ -56,7 +56,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     api = FastAPI(
         title="AI Act Validator API",
-        version="0.3.0",
+        version="0.4.0",
         description=(
             "Motor juridico determinista para cribado inicial del Reglamento de IA de la UE."
         ),

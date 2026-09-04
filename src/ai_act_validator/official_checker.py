@@ -43,11 +43,15 @@ class OfficialComplianceChecker:
         base = data_dir or Path(__file__).parent / "data" / "eu_checker"
         self.logic_payload = json.loads((base / "logic.json").read_text(encoding="utf-8"))
         self.content_payload = json.loads((base / "content_es.json").read_text(encoding="utf-8"))
+        self.translation_payload = json.loads(
+            (base / "translations_es.json").read_text(encoding="utf-8")
+        )
         self.source = json.loads((base / "source.json").read_text(encoding="utf-8"))
         self.questions: dict[str, dict[str, Any]] = self.logic_payload["questions_logic"]
         self.flags_logic: dict[str, dict[str, Any]] = self.logic_payload["flags_logic"]
         self.content: dict[str, dict[str, Any]] = self.content_payload["questions_content"]
         self.flags_content: dict[str, str] = self.content_payload["flags_content"]
+        self.translations: dict[str, dict[str, Any]] = self.translation_payload["questions"]
 
     @property
     def ruleset(self) -> str:
@@ -59,15 +63,18 @@ class OfficialComplianceChecker:
     def question_view(self, question_id: str) -> dict[str, Any]:
         logic = self.questions.get(question_id)
         content = self.content.get(question_id)
+        translation = self.translations.get(question_id, {})
         if logic is None or content is None or logic.get("type") == "hub":
             raise OfficialCheckerError(f"Pregunta oficial no encontrada: {question_id}")
         options = []
         for answer_id, answer_logic in logic.get("answers", {}).items():
             answer_content = content.get("answers", {}).get(answer_id, {})
+            answer_translation = translation.get("answers", {}).get(answer_id, "")
             options.append(
                 {
                     "id": int(answer_id),
                     "label": answer_content.get("label", answer_id),
+                    "label_es": answer_translation,
                     "help": answer_content.get("help", ""),
                     "exclusive": bool(answer_logic.get("exclusive", False)),
                 }
@@ -75,7 +82,9 @@ class OfficialComplianceChecker:
         return {
             "id": question_id,
             "title": content.get("main_title", ""),
+            "title_es": translation.get("main_title", ""),
             "text": content.get("secondary_title", ""),
+            "text_es": translation.get("secondary_title", ""),
             "info": content.get("info", ""),
             "sources": content.get("sources", ""),
             "type": logic["type"],

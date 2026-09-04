@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from datetime import date
 from html import escape
 from typing import Any
@@ -12,6 +13,53 @@ from ai_act_validator.official_checker import (
     OfficialCheckerError,
     OfficialComplianceChecker,
 )
+
+AI_ACT_ARTICLE_URL = "https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-{article}"
+DIRECTIVE_ARTICLE_URLS = {
+    "2011/93": "https://eur-lex.europa.eu/eli/dir/2011/93/oj/eng#art_{article}",
+    "2016/680": "https://eur-lex.europa.eu/eli/dir/2016/680/oj/eng#art_{article}",
+}
+ARTICLE_REFERENCE = re.compile(
+    r"\b(?P<prefix>Articles?|Artículos?|Art\.)\s+"
+    r"(?P<numbers>\d+(?:\s*(?:(?:,|and|or|y|o)\s*)\d+)*)",
+    re.IGNORECASE,
+)
+
+
+def _article_url(article: str, following_text: str) -> str:
+    for directive, template in DIRECTIVE_ARTICLE_URLS.items():
+        if directive in following_text:
+            return template.format(article=article)
+    return AI_ACT_ARTICLE_URL.format(article=article)
+
+
+def link_article_references(value: str) -> str:
+    """Escape text and link every cited article to its authoritative source."""
+
+    escaped = escape(value)
+
+    def replace_reference(match: re.Match[str]) -> str:
+        following = escaped[match.end() : match.end() + 240]
+        prefix = match.group("prefix")
+        numbers = match.group("numbers")
+
+        def replace_number(number_match: re.Match[str]) -> str:
+            article = number_match.group(0)
+            url = _article_url(article, following)
+            return f'<a href="{url}" target="_blank" rel="noopener noreferrer">{article}</a>'
+
+        linked_numbers = re.sub(r"\d+", replace_number, numbers)
+        return f"{prefix} {linked_numbers}"
+
+    return ARTICLE_REFERENCE.sub(replace_reference, escaped)
+
+
+def bilingual_html(original: str, translation: str, css_class: str) -> str:
+    translated = link_article_references(translation)
+    return (
+        f'<div class="{css_class}">{link_article_references(original)}</div>'
+        f'<div class="translation">({translated})</div>'
+    )
 
 
 @st.cache_resource
@@ -58,6 +106,7 @@ def render_sidebar() -> None:
         st.markdown(f"**Nodos:** {source['question_nodes']}")
         st.markdown(f"**Resultados:** {source['result_flags']}")
         st.link_button("Ver fuente oficial", source["source_page"], width="stretch")
+        st.caption("Texto oficial en inglés. Traducción propia orientativa en español.")
         if st.session_state.project is not None:
             if st.button("Nueva evaluación", width="stretch"):
                 reset()
@@ -102,12 +151,39 @@ def render_start() -> None:
 
 
 def answer_widget(question: dict[str, Any]) -> list[int]:
-    labels = {option["label"]: option["id"] for option in question["options"]}
+    option_numbers = list(range(1, len(question["options"]) + 1))
+    option_ids = {number: question["options"][number - 1]["id"] for number in option_numbers}
     if question["type"] == "radio":
-        selected = st.radio("Respuesta", list(labels), index=None)
-        return [] if selected is None else [labels[selected]]
-    selected = st.multiselect("Respuesta", list(labels), placeholder="Selecciona una o varias")
-    return [labels[label] for label in selected]
+        selected = st.radio(
+            "Respuesta",
+            option_numbers,
+            index=None,
+            format_func=lambda number: f"Opción {number}",
+        )
+        return [] if selected is None else [option_ids[selected]]
+    selected = st.multiselect(
+        "Respuesta",
+        option_numbers,
+        placeholder="Selecciona una o varias opciones",
+        format_func=lambda number: f"Opción {number}",
+    )
+    return [option_ids[number] for number in selected]
+
+
+def render_answer_options(question: dict[str, Any]) -> None:
+    for number, option in enumerate(question["options"], start=1):
+        st.markdown(
+            f"""
+            <div class="answer-card">
+              <span class="answer-number">{number}</span>
+              <div class="answer-copy">
+                <div>{link_article_references(option["label"])}</div>
+                <div class="translation">({link_article_references(option["label_es"])})</div>
+              </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
 
 def render_question() -> None:
@@ -118,8 +194,14 @@ def render_question() -> None:
     answered = len(state.answers)
     st.progress(min(answered / 25, 0.95), text=f"{answered} respuestas registradas")
     st.caption(f"Pregunta oficial: {question['id']}")
-    st.subheader(question["title"])
-    st.markdown(f"### {question['text']}")
+    st.markdown(
+        bilingual_html(question["title"], question["title_es"], "question-title"),
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        bilingual_html(question["text"], question["text_es"], "question-text"),
+        unsafe_allow_html=True,
+    )
     if question["info"]:
         with st.expander("Información de la pregunta"):
             st.markdown(question["info"])
@@ -127,6 +209,7 @@ def render_question() -> None:
         with st.expander("Fuentes jurídicas"):
             st.markdown(question["sources"])
 
+    render_answer_options(question)
     with st.form(f"answer_{question['id']}"):
         selected = answer_widget(question)
         submitted = st.form_submit_button("Guardar y continuar", type="primary", width="stretch")
@@ -228,6 +311,21 @@ def run() -> None:
                  margin-bottom: 1.5rem;}
           .hero h1 {font-size: 2rem; margin: 0 0 .35rem 0;}
           .hero p {margin: 0; opacity: .9;}
+          .question-title {font-size: 1.55rem; font-weight: 700; line-height: 1.3;
+                           margin-top: .5rem;}
+          .question-text {font-size: 1.22rem; font-weight: 600; line-height: 1.45;
+                          margin-top: 1.15rem;}
+          .translation {font-size: .82rem; line-height: 1.45; color: #64748b;
+                        margin-top: .2rem;}
+          .answer-card {display: flex; gap: .75rem; align-items: flex-start;
+                        padding: .8rem .9rem; margin: .55rem 0; border: 1px solid #dbe4ee;
+                        border-radius: 12px; background: #f8fafc;}
+          .answer-number {display: inline-flex; align-items: center; justify-content: center;
+                          min-width: 1.7rem; height: 1.7rem; border-radius: 999px;
+                          background: #145da0; color: white; font-weight: 700; font-size: .82rem;}
+          .answer-copy {line-height: 1.45; flex: 1;}
+          .question-title a, .question-text a, .answer-card a {color: #145da0;
+                                                               text-decoration: underline;}
         </style>
         """,
         unsafe_allow_html=True,

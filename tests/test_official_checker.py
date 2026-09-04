@@ -22,6 +22,9 @@ def test_all_official_routes_and_content_are_resolvable():
             view = checker.question_view(question_id)
             assert view["options"]
             assert view["text"]
+            assert view["title_es"]
+            assert view["text_es"]
+            assert all(option["label_es"] for option in view["options"])
         for route in question.get("routing", []):
             target = route["go_to"]
             assert target == "END" or target in checker.questions
