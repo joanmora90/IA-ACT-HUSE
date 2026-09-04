@@ -1,6 +1,6 @@
 # Estado del MVP
 
-- Version: `0.4.0`
+- Version: `0.4.1`
 - Ruleset principal: `EU_COMPLIANCE_CHECKER_2026_07_20`
 - 37 nodos y 45 resultados oficiales de la Comision Europea
 - Interfaz Streamlit adaptativa con motor oficial integrado
@@ -13,8 +13,8 @@
 - Semillas Dataverse: generadas desde el ruleset canonico
 - Pruebas: 31 superadas
 - Flujo Streamlit completo y autonomo: verificado
-- Wheel: `dist/ai_act_validator-0.4.0-py3-none-any.whl`
-- SHA-256 del wheel: `a2c48e1ee9e1d2aa5bb2b40ac1d5ec2b7b16e0b15d02221bacf77cfe517042eb`
+- Wheel: `dist/ai_act_validator-0.4.1-py3-none-any.whl`
+- SHA-256 del wheel: `8fd59bed92845144a87a86863ffe0c890cc35cc8ac2de1133c8df0226eba03f7`
 
 Integracion Power Platform opcional, pendiente de permisos del tenant:
 
