@@ -1,17 +1,18 @@
 # Estado del MVP
 
-- Version: `0.2.0`
-- Ruleset: `EU_AI_ACT_2026_07_27_V0_1`
-- Interfaz Streamlit adaptativa con motor FastAPI integrado para Streamlit Cloud
+- Version: `0.3.0`
+- Ruleset principal: `EU_COMPLIANCE_CHECKER_2026_07_20`
+- 37 nodos y 45 resultados oficiales de la Comision Europea
+- Interfaz Streamlit adaptativa con motor oficial integrado
 - Persistencia local SQLite
 - Inicio simplificado para Windows
 - Ruff: sin errores
 - Swagger 2.0 del Custom Connector: valido
 - Semillas Dataverse: generadas desde el ruleset canonico
-- Pruebas: 21 superadas
+- Pruebas: 27 superadas
 - Flujo Streamlit completo y autonomo: verificado
-- Wheel: `dist/ai_act_validator-0.2.0-py3-none-any.whl`
-- SHA-256 del wheel: `f83941d9e88e4d1ea46482ababe04c8418d6f70e86f662a9560f11c2edba8025`
+- Wheel: `dist/ai_act_validator-0.3.0-py3-none-any.whl`
+- SHA-256 del wheel: `47c27bc67d786f140073688ac5f6d1442557cdef8ecf3c64fd55e7eef9f9fc5a`
 
 Integracion Power Platform opcional, pendiente de permisos del tenant:
 

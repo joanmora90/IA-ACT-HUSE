@@ -79,3 +79,25 @@ def test_power_platform_next_question(settings):
     response = client.post("/api/v1/power-platform/next-question", json=payload)
     assert response.status_code == 200
     assert response.json()["next_question"]["id"] == "Q004"
+
+
+def test_official_checker_api(settings):
+    client = TestClient(create_app(settings))
+    started = client.get("/api/v1/official-checker/start")
+    assert started.status_code == 200
+    assert started.json()["question"]["id"] == "Q1"
+
+    model_path = client.post(
+        "/api/v1/official-checker/answer",
+        json={"state": started.json()["state"], "selected": [0]},
+    )
+    assert model_path.status_code == 200
+    assert model_path.json()["question"]["id"] == "QGPAI 1"
+
+    finished = client.post(
+        "/api/v1/official-checker/answer",
+        json={"state": model_path.json()["state"], "selected": [1]},
+    )
+    assert finished.status_code == 200
+    assert finished.json()["state"]["completed"] is True
+    assert finished.json()["result"]["levels"]["role"]

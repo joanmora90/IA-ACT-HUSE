@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ai-act-validator"
-version = "0.2.0"
+version = "0.3.0"
 description = "Motor determinista y auditable para el cribado inicial del Reglamento de IA de la UE"
 readme = "README.md"
 requires-python = ">=3.12"

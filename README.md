@@ -7,9 +7,12 @@ MVP web de un validador corporativo del Reglamento de IA de la UE:
 - SQLite: expedientes, respuestas y resultados del MVP.
 - Docker: ejecucion reproducible en Windows, macOS y Linux.
 
-El ruleset inicial es `EU_AI_ACT_2026_07_27_V0_1`, basado en el texto consolidado del
-Reglamento (UE) 2024/1689 de 27 de julio de 2026. El resultado es un cribado inicial y no
-sustituye la revision juridica.
+La interfaz principal usa el arbol, las preguntas, las rutas y los resultados del
+**EU AI Act Compliance Checker** oficial. La instantanea integrada contiene 37 nodos y
+45 resultados, con version oficial de 20 de julio de 2026. El resultado es informativo y
+no sustituye la revision juridica.
+
+Fuente y licencia: consulta `EU_SOURCE_ATTRIBUTION.md`.
 
 ## Inicio rapido en Windows
 
@@ -76,6 +79,14 @@ ruff check .
 
 ## API principal
 
+- `GET /api/v1/official-checker/version`
+- `GET /api/v1/official-checker/start`
+- `POST /api/v1/official-checker/answer`
+- `POST /api/v1/official-checker/result`
+
+Los endpoints siguientes corresponden al motor ampliado anterior y se mantienen por
+compatibilidad:
+
 - `POST /api/v1/assessments`
 - `POST /api/v1/assessments/{id}/answers`
 - `POST /api/v1/assessments/{id}/evaluate`
@@ -95,3 +106,4 @@ juridicas de Dataverse.
 - [Texto consolidado del Reglamento](https://eur-lex.europa.eu/eli/reg/2024/1689/2026-07-27/eng)
 - [Calendario de aplicacion](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai)
 - [Directrices sobre sistemas de alto riesgo](https://digital-strategy.ec.europa.eu/en/policies/guidelines-ai-high-risk-systems)
+- [EU AI Act Compliance Checker](https://ai-act-service-desk.ec.europa.eu/en/eu-ai-act-compliance-checker)

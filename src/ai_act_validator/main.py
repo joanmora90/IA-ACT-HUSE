@@ -18,9 +18,12 @@ from .models import (
     AssessmentResult,
     EvaluateRequest,
     NextQuestionResponse,
+    OfficialCheckerAnswerRequest,
+    OfficialCheckerResultRequest,
     PowerPlatformRequest,
     ReportHtmlResponse,
 )
+from .official_checker import CheckerState, OfficialCheckerError, OfficialComplianceChecker
 from .questions import QuestionCatalogue
 from .repository import AssessmentNotFoundError, SQLiteAssessmentRepository
 from .security import CurrentUser, EntraAuthenticator
@@ -44,6 +47,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         effective_settings.ruleset_id,
     )
     repository = SQLiteAssessmentRepository(effective_settings.database_path)
+    official_checker = OfficialComplianceChecker()
     authenticator = EntraAuthenticator(effective_settings)
     templates = Environment(
         loader=FileSystemLoader(Path(__file__).parent / "templates"),
@@ -52,7 +56,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     api = FastAPI(
         title="AI Act Validator API",
-        version="0.2.0",
+        version="0.3.0",
         description=(
             "Motor juridico determinista para cribado inicial del Reglamento de IA de la UE."
         ),
@@ -61,6 +65,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     api.state.questions = questions
     api.state.engine = engine
     api.state.repository = repository
+    api.state.official_checker = official_checker
 
     def current_user(user: CurrentUser = Depends(authenticator.authenticate)) -> CurrentUser:
         return user
@@ -115,7 +120,46 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @api.get("/health", tags=["system"])
     def health() -> dict[str, str]:
-        return {"status": "ok", "ruleset": effective_settings.ruleset_id}
+        return {"status": "ok", "ruleset": official_checker.ruleset}
+
+    @api.get("/api/v1/official-checker/version", tags=["official-checker"])
+    def official_checker_version(_: CurrentUser = Depends(current_user)) -> dict:
+        return official_checker.source
+
+    @api.get("/api/v1/official-checker/start", tags=["official-checker"])
+    def official_checker_start(_: CurrentUser = Depends(current_user)) -> dict:
+        state = official_checker.new_state()
+        return {
+            "state": state.snapshot(),
+            "question": official_checker.question_view(state.current_question_id or ""),
+        }
+
+    @api.post("/api/v1/official-checker/answer", tags=["official-checker"])
+    def official_checker_answer(
+        request: OfficialCheckerAnswerRequest,
+        _: CurrentUser = Depends(current_user),
+    ) -> dict:
+        state = CheckerState.from_snapshot(request.state)
+        try:
+            official_checker.submit(state, request.selected)
+        except OfficialCheckerError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        return {
+            "state": state.snapshot(),
+            "question": (
+                official_checker.question_view(state.current_question_id or "")
+                if not state.completed
+                else None
+            ),
+            "result": official_checker.result(state) if state.completed else None,
+        }
+
+    @api.post("/api/v1/official-checker/result", tags=["official-checker"])
+    def official_checker_result(
+        request: OfficialCheckerResultRequest,
+        _: CurrentUser = Depends(current_user),
+    ) -> dict:
+        return official_checker.result(CheckerState.from_snapshot(request.state))
 
     @api.get("/api/v1/rules/version", tags=["rules"])
     def rules_version(_: CurrentUser = Depends(current_user)) -> dict[str, str]:

@@ -173,3 +173,12 @@ class PowerPlatformRequest(BaseModel):
 
 class ReportHtmlResponse(BaseModel):
     html: str
+
+
+class OfficialCheckerAnswerRequest(BaseModel):
+    state: dict[str, Any]
+    selected: list[int]
+
+
+class OfficialCheckerResultRequest(BaseModel):
+    state: dict[str, Any]

@@ -1,0 +1,15 @@
+{
+  "ruleset": "EU_COMPLIANCE_CHECKER_2026_07_20",
+  "official_last_update": "2026-07-20",
+  "retrieved_at": "2026-09-04T05:29:49.729213+00:00",
+  "source_page": "https://ai-act-service-desk.ec.europa.eu/en/eu-ai-act-compliance-checker",
+  "copyright_page": "https://ai-act-service-desk.ec.europa.eu/en/copyright-notice",
+  "license": "CC BY 4.0",
+  "logic_url": "https://europa.eu/assets/wcloud/widgets/202506/211c3a80-559a-11f0-b4dd-7fbfa4c84d38/logic.json",
+  "content_url": "https://europa.eu/assets/wcloud/widgets/202506/211c3a80-559a-11f0-b4dd-7fbfa4c84d38/content_es.json",
+  "logic_sha256": "19deeb93d9e9cf753cf473731a43a98932e2d046242d7923166d6228a852152c",
+  "content_sha256": "1e27d497f8d156146cfbedd7da8c14bc3c08dc34987d799953294ebd25a47532",
+  "question_nodes": 37,
+  "result_flags": 45,
+  "notice": "Contenido reutilizado de la Union Europea. La interfaz y la integracion son modificaciones propias y no representan una evaluacion de la Comision Europea."
+}
